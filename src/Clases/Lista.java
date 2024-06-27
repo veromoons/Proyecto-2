@@ -33,8 +33,8 @@ public class Lista {
     /**
     * Procedimiento para preinsertar un nuevo nodo antes del primer nodo de una lista, es necesario entonces reubicar el apuntafor first de la lista al nuevo nodo anadido
     */
-    public void preinsertarPrimero(Resumen resumen){ 
-        Nodo nuevo = new Nodo(resumen);                 
+    public void preinsertarPrimero(String palabra){ 
+        Nodo nuevo = new Nodo(palabra);                 
         nuevo.setNext(first);               
         first=nuevo;
         iN++;
@@ -60,10 +60,10 @@ public class Lista {
      * Metodo para insertar al final de la lista
      * @param palabra a insertar
      */
-    public void insertarUltimo(Resumen resumen){  
+    public void insertarUltimo(String palabra){  
         
         Nodo ult=buscarUltimo();                    
-        Nodo nuevo = new Nodo(resumen); 
+        Nodo nuevo = new Nodo(palabra); 
         if(ult == null){
            first = nuevo;
         }else{

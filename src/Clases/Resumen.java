@@ -9,15 +9,18 @@ public class Resumen {
     
     //Atributos
     private String titulo;
-    //Lista autores;
+    private Lista autores;
     private String cuerpo;
-    //Lista palabrasClave;
+    private Lista palabrasClave;
     
     //Constructor
-    public Resumen(String titulo, String cuerpo) {
+    public Resumen(String titulo, String cuerpo, Lista autores, Lista palabrasClave) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
+        this.autores = autores;
+        this.palabrasClave = palabrasClave;
     }
+    
 
     /**
      * @return the titulo
@@ -45,6 +48,22 @@ public class Resumen {
      */
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
+    }
+
+    public Lista getAutores() {
+        return autores;
+    }
+
+    public Lista getPalabrasClave() {
+        return palabrasClave;
+    }
+
+    public void setAutores(Lista autores) {
+        this.autores = autores;
+    }
+
+    public void setPalabrasClave(Lista palabrasClave) {
+        this.palabrasClave = palabrasClave;
     }
     
     

@@ -5,6 +5,8 @@
  */
 package Clases;
 
+import Interfaces.Ventana1;
+
 /**
  *
  * @author veronicaluna
@@ -15,7 +17,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        Ventana1 v1 = new Ventana1();
+        v1.setVisible(true);
         char ch = '}';
 
         // Creating a new variable of type int
@@ -25,8 +28,8 @@ public class Main {
         /* Java stores the ascii value there itself*/
 
         // Printing the ASCII value of above character
-        System.out.println("The ASCII value of " + ch
-                           + " is: " + ascii);
+        //System.out.println("The ASCII value of " + ch
+                           //+ " is: " + ascii);
         
     }
     

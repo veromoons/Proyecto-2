@@ -9,12 +9,12 @@ public class Hashtable {
     
     // Atributos
     int tam;
-    Nodo[] ArrayHash;
+    NodoResumen[] ArrayHash;
 
     // Constructor
     public Hashtable(int t) {
         this.tam = t;
-        this.ArrayHash = new Nodo[tam];
+        this.ArrayHash = new NodoResumen[tam];
         for (int i=0; i<ArrayHash.length; i++){
             ArrayHash[i]=null;
         }
@@ -37,11 +37,12 @@ public class Hashtable {
     
     public void insertar(Resumen resumen){ //insercion en lista se hace de primero para mantener O(1)
         int indice=funcionHash(resumen.getTitulo());
-        Nodo nodoNuevo = new Nodo(resumen);
+        NodoResumen nodoNuevo = new NodoResumen(resumen);
         nodoNuevo.setNext(ArrayHash[indice]); 
         ArrayHash[indice]=nodoNuevo;
     }
     
+   
     
     
 }
