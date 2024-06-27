@@ -6,6 +6,7 @@ package Info;
 
 import Clases.Lista;
 import Clases.Resumen;
+import Clases.Hashtable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,12 +18,14 @@ import java.io.IOException;
  * @author sofiagrateron
  */
 public class LeerTxt {
-
+    Hashtable tabla;
+    
     public LeerTxt() {
+        this.tabla = new Hashtable(10000);
     }
     
-    public void cargarInfo(File abre) throws FileNotFoundException, IOException{
-        boolean guardado;
+    public boolean cargarResumen(File abre) throws FileNotFoundException, IOException{
+        boolean guardado = false;
         String line;
         String titulo = "";
         String cuerpo = "";
@@ -38,6 +41,7 @@ public class LeerTxt {
                 while((line = br.readLine().toUpperCase()) != null){
                     line = line.trim();
                     titulo = line;
+                    line = br.readLine();
                     if (line.isEmpty())continue;
                     else {
                         while (!line.toLowerCase().equals("resumen")){
@@ -54,6 +58,7 @@ public class LeerTxt {
                         line = br.readLine();
                         palabras += line;
                         palabras = palabras.replace("Palabras Claves: ", " ");
+                        palabras = palabras.replace(".", " ");
                         String [] palabrasSplit = palabras.split(",\\s*|\\sy\\s");
                         for (int i = 0; i < palabrasSplit.length; i++) {
                             //System.out.println(palabrasSplit[i]);
@@ -64,17 +69,21 @@ public class LeerTxt {
                     }
                 }
                      guardado = true;
+                     Resumen resumen = new Resumen(titulo, cuerpo, autores, palabrasClave);
+                     this.tabla.insertar(resumen);
                 }
             
              catch(Exception err){
-                guardado = false;
                     }
             System.out.println(titulo);
-            //System.out.println(autores.imprimir_lista());
-            //System.out.println(cuerpo);
-            //System.out.println(palabrasClave.imprimir_lista());
+            System.out.println(autores.imprimir_lista());
+            System.out.println(cuerpo);
+            System.out.println(palabrasClave.imprimir_lista());
         }
-            
+          return guardado;  
     }
+    public void guardarResumen(){
+    
+}
     
 }

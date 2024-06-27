@@ -62,7 +62,7 @@ public class Ventana1 extends javax.swing.JFrame {
         File abre =file.getSelectedFile();
         LeerTxt txt = new LeerTxt();
         try {
-            txt.cargarInfo(abre);
+            txt.cargarResumen(abre);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Archivo no encontrado");
         }
