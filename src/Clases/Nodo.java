@@ -2,35 +2,35 @@
 package Clases;
 
 /**
- *Clase para implementar setters y getters del nodo que va a contener la lista de la clase Lista, estos van a ser los nodos que guarda la hashtable en sus indices o index
- * Esto es por si acaso hay colisiones, que se cree la lista de una vez.
- * @author veronicaluna
+ *Clase para 
+ *.
+ * @author sofiagrateron
  */
 public class Nodo {
-    private Resumen resumen;
+    private String palabra;
     private Nodo next;
     /**
      * Constructor
      * @param r 
      */
-    public Nodo(Resumen r) {
-        this.resumen = r;
+    public Nodo(String r) {
+        this.palabra = r;
         this.next = null;
     }
 
     /** Metodo para obtener la informacion del nodo
-     * @return the info, el objeto resumen contenido en el nodo
+     * @return 
      */
-    public Resumen getInfo() {
-        return resumen;
+    public String getInfo() {
+        return palabra;
     }
 
     /**
-     * Metodo para establecer la informacion de un nodo, el objeto resumen
+     * Metodo para establecer la informacion de un nodo
      * @param info the info to set
      */
-    public void setInfo(Resumen resumen) {
-        this.resumen = resumen;
+    public void setInfo(String palabra) {
+        this.palabra = palabra;
     }
 
     /**

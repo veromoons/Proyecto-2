@@ -2,7 +2,7 @@
 package Clases;
 
 /**
- * Clase para implementar primitivas de una lista simplemente enlazada, en caso de que hayan colisiones en la hashtable
+ * Clase para implementar primitivas de una lista simplemente enlazada
  * @author veronicaluna
  */
 
@@ -33,8 +33,8 @@ public class Lista {
     /**
     * Procedimiento para preinsertar un nuevo nodo antes del primer nodo de una lista, es necesario entonces reubicar el apuntafor first de la lista al nuevo nodo anadido
     */
-    public void preinsertarPrimero(Resumen resumen){ 
-        Nodo nuevo = new Nodo(resumen);                 
+    public void preinsertarPrimero(String palabra){ 
+        Nodo nuevo = new Nodo(palabra);                 
         nuevo.setNext(first);               
         first=nuevo;
         iN++;
@@ -60,10 +60,10 @@ public class Lista {
      * Metodo para insertar al final de la lista
      * @param palabra a insertar
      */
-    public void insertarUltimo(Resumen resumen){  
+    public void insertarUltimo(String palabra){  
         
         Nodo ult=buscarUltimo();                    
-        Nodo nuevo = new Nodo(resumen); 
+        Nodo nuevo = new Nodo(palabra); 
         if(ult == null){
            first = nuevo;
         }else{
@@ -76,18 +76,18 @@ public class Lista {
      * Metodo para guardar los elementos de la lista en un string
      * @return 
      */
-    public String imprimir_lista(){
+    public String recorrer(){
         String imprimir = "";
         if (this.iN == 1){
-            imprimir += getFirst().getInfo() + "\n";
+            imprimir += getFirst().getInfo() + ", ";
         }
         else{
             Nodo temp = getFirst();
             while (temp != null){
-            imprimir += temp.getInfo() + "\n";
-            temp = temp.getNext();
+                imprimir += temp.getInfo() + ", ";
+                temp = temp.getNext();
             }
-    }
+        }
         return imprimir;
     }
     

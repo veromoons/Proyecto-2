@@ -6,14 +6,14 @@ package Clases;
  * @author veronicaluna
  */
 
-public class ListaStr {
+public class ListaResumen {
     
     //Atributos
-    private NodoStr first;
+    private NodoResumen first;
     private int iN;
 
     //Constructor
-    public ListaStr() {             
+    public ListaResumen() {             
         this.first = null;
         this.iN = 0;
     }
@@ -33,8 +33,8 @@ public class ListaStr {
     /**
     * Procedimiento para preinsertar un nuevo nodo antes del primer nodo de una lista, es necesario entonces reubicar el apuntafor first de la lista al nuevo nodo anadido
     */
-    public void preinsertarPrimero(String palabraClave){ 
-        NodoStr nuevo = new NodoStr(palabraClave);                 
+    public void preinsertarPrimero(Resumen resumen){ 
+        NodoResumen nuevo = new NodoResumen(resumen);                 
         nuevo.setNext(first);               
         first=nuevo;
         iN++;
@@ -44,9 +44,9 @@ public class ListaStr {
      * Metodo para buscar el ultimo elemento de la lista
      * @return 
      */
-    public NodoStr buscarUltimo(){
+    public NodoResumen buscarUltimo(){
 
-        NodoStr aux = first;
+        NodoResumen aux = first;
         if (first== null){
             return null;
         }
@@ -60,10 +60,10 @@ public class ListaStr {
      * Metodo para insertar al final de la lista
      * @param palabra a insertar
      */
-    public void insertarUltimo(String palabra){  
+    public void insertarUltimo(Resumen resumen){  
         
-        NodoStr ult=buscarUltimo();                    
-        NodoStr nuevo = new NodoStr(palabra); 
+        NodoResumen ult=buscarUltimo();                    
+        NodoResumen nuevo = new NodoResumen(resumen); 
         if(ult == null){
            first = nuevo;
         }else{
@@ -76,34 +76,38 @@ public class ListaStr {
      * Metodo para guardar los elementos de la lista en un string
      * @return 
      */
-    public String imprimir_lista(){
+    public String recorrerResumenes(){
         String imprimir = "";
         if (this.iN == 1){
-            imprimir += getFirst().getInfo() + "\n";
+            imprimir += getFirst().getInfo().getInfoResumen() + "\n";
         }
         else{
-            NodoStr temp = getFirst();
+            NodoResumen temp = getFirst();
+            //int contador=0;
             while (temp != null){
-            imprimir += temp.getInfo() + "\n";
-            temp = temp.getNext();
+                imprimir += temp.getInfo().getInfoResumen() + "\n";
+                //contador++;
+                //System.out.println(contador);
+                temp = temp.getNext();
             }
-    }
+        }
         return imprimir;
     }
+    
     
     
     /**
      * Metodo para obtener el pimer elemento de la lista
      * @return the first
      */
-    public NodoStr getFirst() {
+    public NodoResumen getFirst() {
         return first;
     }
 
     /**Metodo para fijar el primer elemento de la lista
      * @param first the first to set
      */
-    public void setFirst(NodoStr first) {
+    public void setFirst(NodoResumen first) {
         this.first = first;
     }
 

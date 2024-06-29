@@ -9,12 +9,12 @@ public class Hashtable {
     
     // Atributos
     int tam;
-    Nodo[] ArrayHash;
+    NodoResumen[] ArrayHash;
 
     // Constructor
     public Hashtable(int t) {
         this.tam = t;
-        this.ArrayHash = new Nodo[tam];
+        this.ArrayHash = new NodoResumen[tam];
         for (int i=0; i<ArrayHash.length; i++){
             ArrayHash[i]=null;
         }
@@ -30,49 +30,94 @@ public class Hashtable {
             suma += ascii+(suma*constante);
         }
         
-        int indiceEnArray = suma % tam;
+        int indiceEnArray = Math.abs(suma % tam);
         
         return indiceEnArray;
     }
     
     public void insertarPorTitulo(Resumen resumen){ //insercion en lista se hace de primero para mantener O(1)
-       
-        int indice = funcionHash(resumen.getTitulo());
-        Nodo nodoNuevo = new Nodo(resumen);
+        int indice = funcionHash(resumen.getTitulo());  //PROBAR CON DOS RESUMENES CON MISMO TITULO
+        NodoResumen nodoNuevo = new NodoResumen(resumen);
         nodoNuevo.setNext(ArrayHash[indice]); 
         ArrayHash[indice]=nodoNuevo;
+     
     }
     
-    public Nodo buscarPorTitulo(String tituloBuscado){
-        
+    public ListaResumen buscarPorTitulo(String tituloBuscado){ //retorna lista vacia si no hay resumenes con el titulo buscado
         int indice = funcionHash(tituloBuscado);
-        Nodo pAux= null;
+        NodoResumen pAux= null;  
+        ListaResumen resumConIgualTituloEncontr= new ListaResumen();
         
         if (ArrayHash[indice]!=null){
             pAux = ArrayHash[indice];
-            while (pAux.getNext()!=null && pAux.getInfo().getTitulo()!=tituloBuscado){
-                pAux=pAux.getNext();
-                if (pAux.getInfo().getTitulo()!=tituloBuscado){  //si ya esta en el ultimo nodo de la lista del indice que corresponde o corresponderia al titulo, entonces asignarle null a pAux
-                    pAux=null;
+            while (pAux!=null){
+                if (pAux.getInfo().getTitulo()==tituloBuscado){
+                    resumConIgualTituloEncontr.preinsertarPrimero(pAux.getInfo());
                 }
-            }   
-        }
-        return pAux;
+                pAux=pAux.getNext();
+                }
+            }
+        return resumConIgualTituloEncontr;
     }
+//            while (pAux.getNext()!=null && pAux.getInfo().getTitulo()!=tituloBuscado){
+//                pAux=pAux.getNext();
+//                if (pAux.getInfo().getTitulo()!=tituloBuscado){  //si ya esta en el ultimo nodo de la lista del indice que corresponde o corresponderia al titulo, entonces asignarle null a pAux
+//                    pAux=null;
+//                }
+//            }   
     
     public void insertarPorPalabraClave(Resumen resumen){
-        NodoStr pAux= resumen.getPalabrasClave().getFirst();
+        Nodo pAux= resumen.getPalabrasClave().getFirst();
         while (pAux!=null){
-            
+            int indice = funcionHash(pAux.getInfo());
+            NodoResumen nodoNuevo = new NodoResumen(resumen);
+            nodoNuevo.setNext(ArrayHash[indice]); 
+            ArrayHash[indice]=nodoNuevo;
             pAux=pAux.getNext();
         }
-        
-        
-        
     }
     
+    public ListaResumen buscarPorPalabraClave(String palabraClave){  
+        int indice = funcionHash(palabraClave);
+        NodoResumen pAux = null;
+        ListaResumen resumenesEncontrados = new ListaResumen();
+        
+        if (ArrayHash[indice]!=null){
+            pAux= ArrayHash[indice];
+            while (pAux!=null){
+                resumenesEncontrados.preinsertarPrimero(pAux.getInfo());
+                pAux=pAux.getNext();
+            }
+        }
+        return resumenesEncontrados;         
+    }
     
+    public void insertarPorAutor(Resumen resumen){
+        Nodo pAux= resumen.getAutores().getFirst();
+        while (pAux!=null){
+            int indice = funcionHash(pAux.getInfo());
+            NodoResumen nodoNuevo = new NodoResumen(resumen);
+            nodoNuevo.setNext(ArrayHash[indice]); 
+            ArrayHash[indice]=nodoNuevo;
+            pAux=pAux.getNext();
+        }
+    }
+    public ListaResumen buscarPorAutor(String autor){  
+        int indice = funcionHash(autor);
+        NodoResumen pAux = null;
+        ListaResumen resumenesEncontrados = new ListaResumen();
+        
+        if (ArrayHash[indice]!=null){
+            pAux= ArrayHash[indice];
+            while (pAux!=null){
+                resumenesEncontrados.preinsertarPrimero(pAux.getInfo());
+                pAux=pAux.getNext();
+            }
+        }
+       return resumenesEncontrados;         
+    }
     
+   
     
-    
+
 }
