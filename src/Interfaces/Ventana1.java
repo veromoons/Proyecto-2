@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import Clases.Resumen;
 import Info.LeerTxt;
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         cargarResumen = new javax.swing.JButton();
+        usarResumenesCargados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -50,6 +52,14 @@ public class Ventana1 extends javax.swing.JFrame {
         });
         jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, -1, -1));
 
+        usarResumenesCargados.setText("Usar resumenes precargados");
+        usarResumenesCargados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usarResumenesCargadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 400));
 
         pack();
@@ -62,11 +72,30 @@ public class Ventana1 extends javax.swing.JFrame {
         File abre =file.getSelectedFile();
         LeerTxt txt = new LeerTxt();
         try {
+<<<<<<< HEAD
             txt.cargarResumen(abre);
+=======
+            if (txt.cargarInfo(abre)){
+            txt.cargarResumentxt(txt.getResumen());}
+>>>>>>> sofia
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Archivo no encontrado");
+            JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
         }
     }//GEN-LAST:event_cargarResumenActionPerformed
+
+    private void usarResumenesCargadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usarResumenesCargadosActionPerformed
+        // TODO add your handling code here:
+        LeerTxt txt = new LeerTxt();
+        try {
+            File archivo = new File("resumenes.txt");
+            //txt.leerResumenes(archivo);
+            if (!txt.leerResumenesTxt(archivo)) {
+               JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+            }
+             } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+        }
+    }//GEN-LAST:event_usarResumenesCargadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -106,5 +135,6 @@ public class Ventana1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarResumen;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton usarResumenesCargados;
     // End of variables declaration//GEN-END:variables
 }
