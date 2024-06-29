@@ -25,7 +25,15 @@ public class Resumen {
         return "Titulo: " + this.titulo + "\n" + "Autores: "+ this.autores.recorrer() +"\n" + "Palabras clave: " + this.palabrasClave.recorrer();
     }
     
-
+    public String mostrarResumen(){
+        String resumenCargar = "";
+        resumenCargar += titulo + "\n\n";
+        resumenCargar += "AUTORES \n" + autores.recorrer() + "\n";
+        resumenCargar += "RESUMEN \n" + cuerpo + "\n";
+        resumenCargar += "PALABRAS CLAVES: \n" + palabrasClave.recorrer();
+        return resumenCargar;
+    }
+    
     /**
      * @return the titulo
      */

@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import Clases.Resumen;
 import Info.LeerTxt;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class Ventana1 extends javax.swing.JFrame {
      */
     public Ventana1() {
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -36,6 +38,8 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         cargarResumen = new javax.swing.JButton();
+        usarResumenesCargados = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,7 +52,23 @@ public class Ventana1 extends javax.swing.JFrame {
                 cargarResumenActionPerformed(evt);
             }
         });
-        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, -1, -1));
+        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 230, -1, -1));
+
+        usarResumenesCargados.setText("Usar resumenes precargados");
+        usarResumenesCargados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usarResumenesCargadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
+
+        jButton1.setText("Continuar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 400));
 
@@ -56,17 +76,37 @@ public class Ventana1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cargarResumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarResumenActionPerformed
-        // TODO add your handling code here:
         JFileChooser file=new JFileChooser();
         file.showOpenDialog(this);
         File abre =file.getSelectedFile();
         LeerTxt txt = new LeerTxt();
         try {
-            txt.cargarInfo(abre);
+            if (txt.cargarInfo(abre)){
+            txt.cargarResumentxt(txt.getResumen());}
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Archivo no encontrado");
+            JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
         }
     }//GEN-LAST:event_cargarResumenActionPerformed
+
+    private void usarResumenesCargadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usarResumenesCargadosActionPerformed
+        // TODO add your handling code here:
+        LeerTxt txt = new LeerTxt();
+        try {
+            File archivo = new File("resumenes.txt");
+            //txt.leerResumenes(archivo);
+            if (!txt.leerResumenesTxt(archivo)) {
+               JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+            }
+             } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+        }
+    }//GEN-LAST:event_usarResumenesCargadosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Ventana2 v2 = new Ventana2();
+        v2.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,6 +145,8 @@ public class Ventana1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarResumen;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton usarResumenesCargados;
     // End of variables declaration//GEN-END:variables
 }
