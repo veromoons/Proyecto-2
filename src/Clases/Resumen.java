@@ -21,7 +21,14 @@ public class Resumen {
         this.palabrasClave = palabrasClave;
     }
     
-
+    public String mostrarResumen(){
+        String resumenCargar = "";
+        resumenCargar += titulo + "\n\n";
+        resumenCargar += "AUTORES \n" + autores.imprimir_lista() + "\n";
+        resumenCargar += "RESUMEN \n" + cuerpo + "\n";
+        resumenCargar += "PALABRAS CLAVES: \n" + palabrasClave.imprimir_lista();
+        return resumenCargar;
+    }
     /**
      * @return the titulo
      */
