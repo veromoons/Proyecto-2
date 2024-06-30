@@ -2,18 +2,18 @@
 package Clases;
 
 /**
- * Clase para implementar primitivas de una lista simplemente enlazada
+ * Clase para implementar primitivas de una lista simplemente enlazada, en caso de que hayan colisiones en la hashtable
  * @author veronicaluna
  */
 
-public class Lista {
+public class ListaResumen {
     
     //Atributos
-    private Nodo first;
+    private NodoResumen first;
     private int iN;
 
     //Constructor
-    public Lista() {             
+    public ListaResumen() {             
         this.first = null;
         this.iN = 0;
     }
@@ -33,8 +33,8 @@ public class Lista {
     /**
     * Procedimiento para preinsertar un nuevo nodo antes del primer nodo de una lista, es necesario entonces reubicar el apuntafor first de la lista al nuevo nodo anadido
     */
-    public void preinsertarPrimero(String palabra){ 
-        Nodo nuevo = new Nodo(palabra);                 
+    public void preinsertarPrimero(Resumen resumen){ 
+        NodoResumen nuevo = new NodoResumen(resumen);                 
         nuevo.setNext(first);               
         first=nuevo;
         iN++;
@@ -44,9 +44,9 @@ public class Lista {
      * Metodo para buscar el ultimo elemento de la lista
      * @return 
      */
-    public Nodo buscarUltimo(){
+    public NodoResumen buscarUltimo(){
 
-        Nodo aux = first;
+        NodoResumen aux = first;
         if (first== null){
             return null;
         }
@@ -60,10 +60,10 @@ public class Lista {
      * Metodo para insertar al final de la lista
      * @param palabra a insertar
      */
-    public void insertarUltimo(String palabra){  
+    public void insertarUltimo(Resumen resumen){  
         
-        Nodo ult=buscarUltimo();                    
-        Nodo nuevo = new Nodo(palabra); 
+        NodoResumen ult=buscarUltimo();                    
+        NodoResumen nuevo = new NodoResumen(resumen); 
         if(ult == null){
            first = nuevo;
         }else{
@@ -76,15 +76,18 @@ public class Lista {
      * Metodo para guardar los elementos de la lista en un string
      * @return 
      */
-    public String recorrer(){
+    public String recorrerResumenes(){
         String imprimir = "";
         if (this.iN == 1){
-            imprimir += getFirst().getInfo() + ", ";
+            imprimir += getFirst().getInfo().getInfoResumen() + "\n";
         }
         else{
-            Nodo temp = getFirst();
+            NodoResumen temp = getFirst();
+            //int contador=0;
             while (temp != null){
-                imprimir += temp.getInfo() + ", ";
+                imprimir += temp.getInfo().getInfoResumen() + "\n";
+                //contador++;
+                //System.out.println(contador);
                 temp = temp.getNext();
             }
         }
@@ -92,18 +95,19 @@ public class Lista {
     }
     
     
+    
     /**
      * Metodo para obtener el pimer elemento de la lista
      * @return the first
      */
-    public Nodo getFirst() {
+    public NodoResumen getFirst() {
         return first;
     }
 
     /**Metodo para fijar el primer elemento de la lista
      * @param first the first to set
      */
-    public void setFirst(Nodo first) {
+    public void setFirst(NodoResumen first) {
         this.first = first;
     }
 
