@@ -23,22 +23,14 @@ import javax.swing.JOptionPane;
  */
 public class LeerTxt {
     Hashtable tabla;
-<<<<<<< HEAD
-    
-    public LeerTxt() {
-        this.tabla = new Hashtable(10000);
-    }
-    
-    public boolean cargarResumen(File abre) throws FileNotFoundException, IOException{
-=======
     Resumen resumen;
+
     public LeerTxt() {
         this.tabla = new Hashtable(10000);
         this.resumen = null;
     }
     
     public boolean cargarInfo(File abre) throws FileNotFoundException, IOException{
->>>>>>> sofia
         boolean guardado = false;
         String line;
         String titulo = "";
@@ -54,17 +46,14 @@ public class LeerTxt {
                 if((line = br.readLine().toUpperCase()) != null){
                     line = line.trim();
                     titulo = line;
-<<<<<<< HEAD
                     line = br.readLine();
-                    if (line.isEmpty())continue;
-                    else {
+                    //if (line.isEmpty())continue;
+                    //else {
                         while (!line.toLowerCase().equals("resumen")){
-=======
                     line= br.readLine();
                     //if (line.isEmpty()) continue;
                     //else {
                         while (!line.trim().equalsIgnoreCase("resumen")){
->>>>>>> sofia
                             if (!line.equalsIgnoreCase("autores") && !line.equalsIgnoreCase("")){
                                     autores.insertarUltimo(line);}
                             line = br.readLine();
@@ -79,16 +68,8 @@ public class LeerTxt {
                             line = br.readLine();
                         }
                         palabras += line;
-<<<<<<< HEAD
-                        palabras = palabras.replace("Palabras Claves: ", " ");
-                        palabras = palabras.replace(".", " ");
-                        String [] palabrasSplit = palabras.split(",\\s*|\\sy\\s");
-                        for (int i = 0; i < palabrasSplit.length; i++) {
-=======
-                        //palabras = palabras.replace("Palabras Claves: ", " ");
                         String [] palabrasSplit = palabras.split(",\\s*|\\sy\\s|:\\s*|\\.\\s*");
                         for (int i = 1; i < palabrasSplit.length; i++) {
->>>>>>> sofia
                             //System.out.println(palabrasSplit[i]);
                             palabrasClave.insertarUltimo(palabrasSplit[i].trim());
                         }
@@ -96,11 +77,6 @@ public class LeerTxt {
                             
                     
                 }
-<<<<<<< HEAD
-                     guardado = true;
-                     Resumen resumen = new Resumen(titulo, cuerpo, autores, palabrasClave);
-                     this.tabla.insertar(resumen);
-=======
                 
                 guardado = true;
                 
@@ -109,25 +85,21 @@ public class LeerTxt {
             this.tabla.insertar(resumen);
                   }
                      
->>>>>>> sofia
                 }
+                }
+            
             
              catch(Exception err){
                     }
-<<<<<<< HEAD
+
             System.out.println(titulo);
             System.out.println(autores.imprimir_lista());
             System.out.println(cuerpo);
             System.out.println(palabrasClave.imprimir_lista());
-=======
-            
->>>>>>> sofia
+
         }
           return guardado;  
     }
-    public void guardarResumen(){
-    
-}
     
     public void cargarResumentxt(Resumen resumen){
        String resumenCargar;

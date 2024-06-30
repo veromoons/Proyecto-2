@@ -72,12 +72,8 @@ public class Ventana1 extends javax.swing.JFrame {
         File abre =file.getSelectedFile();
         LeerTxt txt = new LeerTxt();
         try {
-<<<<<<< HEAD
-            txt.cargarResumen(abre);
-=======
             if (txt.cargarInfo(abre)){
             txt.cargarResumentxt(txt.getResumen());}
->>>>>>> sofia
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
         }
