@@ -27,7 +27,7 @@ public class Resumen {
     
     public String mostrarResumen(){
         String resumenCargar = "";
-        resumenCargar += titulo + "\n\n";
+        resumenCargar += titulo+"\n";
         resumenCargar += "AUTORES \n" + autores.recorrer() + "\n";
         resumenCargar += "RESUMEN \n" + cuerpo + "\n";
         resumenCargar += "PALABRAS CLAVES: \n" + palabrasClave.recorrer();

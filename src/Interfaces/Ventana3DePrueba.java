@@ -6,6 +6,9 @@
 
 package Interfaces;
 
+import Clases.ListaResumen;
+import Info.LeerTxt;
+
 /**
  *
  * @author verol
@@ -54,7 +57,7 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaResumenes);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 320, 190));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 320, 160));
         jPanel1.add(palabraABuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 210, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -72,6 +75,8 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        ListaResumen resumenesEncontrados=LeerTxt.hashPalabrasClave.buscarPorPalabraClave(palabraABuscar.getText());
+        System.out.println(resumenesEncontrados.recorrerResumenes());
         
     }//GEN-LAST:event_botonBuscarActionPerformed
 

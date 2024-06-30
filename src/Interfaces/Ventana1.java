@@ -82,6 +82,7 @@ public class Ventana1 extends javax.swing.JFrame {
         LeerTxt txt = new LeerTxt();
         try {
             if (txt.cargarInfo(abre)){
+                //System.out.println("txt: "+ txt);
             txt.cargarResumentxt(txt.getResumen());}
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
@@ -95,10 +96,13 @@ public class Ventana1 extends javax.swing.JFrame {
             File archivo = new File("resumenes.txt");
             //txt.leerResumenes(archivo);
             if (!txt.leerResumenesTxt(archivo)) {
-               JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+                JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Si hay resumenes precargados");
             }
              } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+                JOptionPane.showMessageDialog(this, "Error revisando resumenes precargados");
         }
     }//GEN-LAST:event_usarResumenesCargadosActionPerformed
 
