@@ -18,12 +18,14 @@ import javax.swing.JOptionPane;
  * @author berna
  */
 public class Ventana1 extends javax.swing.JFrame {
+    boolean cargado;
     /**
      * Creates new form Ventana1
      */
     public Ventana1() {
         initComponents();
         this.setLocationRelativeTo(this);
+        this.cargado = false;
     }
 
     /**
@@ -81,7 +83,8 @@ public class Ventana1 extends javax.swing.JFrame {
         LeerTxt txt = new LeerTxt();
         try {
             if (txt.cargarInfo(abre)){
-            txt.cargarResumentxt(txt.getResumen());}
+            txt.cargarResumentxt(txt.getResumen());
+            this.cargado = true;}
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
         }
@@ -98,6 +101,7 @@ public class Ventana1 extends javax.swing.JFrame {
             }
             else{
                 JOptionPane.showMessageDialog(this, "Si hay resumenes precargados");
+                this.cargado = true;
             }
              } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error revisando resumenes precargados");
@@ -105,9 +109,13 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_usarResumenesCargadosActionPerformed
 
     private void continuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuarActionPerformed
+        if (this.cargado){
         Ventana2 v2 = new Ventana2();
         v2.setVisible(true);
-        this.setVisible(false);
+        this.setVisible(false);}
+        else{
+            JOptionPane.showMessageDialog(this, "Debe seleccionar algun tipo de informacion para trabajar. Resumenes precargados o cargar nuevo resumen");
+        }
     }//GEN-LAST:event_continuarActionPerformed
 
     /**
