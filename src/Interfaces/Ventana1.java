@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import Clases.Main;
 
 /**
  *
@@ -42,27 +43,31 @@ public class Ventana1 extends javax.swing.JFrame {
         usarResumenesCargados = new javax.swing.JButton();
         continuar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cargarResumen.setText("Cargar resumen");
+        cargarResumen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 1 v1.png"))); // NOI18N
+        cargarResumen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cargarResumen.setBorderPainted(false);
         cargarResumen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cargarResumenActionPerformed(evt);
             }
         });
-        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
+        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 160, 50));
 
-        usarResumenesCargados.setText("Usar resumenes precargados");
+        usarResumenesCargados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 2 v1.png"))); // NOI18N
+        usarResumenesCargados.setBorderPainted(false);
         usarResumenesCargados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usarResumenesCargadosActionPerformed(evt);
             }
         });
-        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 100, -1));
+        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 250, 50));
 
         continuar.setText("Continuar");
         continuar.addActionListener(new java.awt.event.ActionListener() {
@@ -70,12 +75,15 @@ public class Ventana1 extends javax.swing.JFrame {
                 continuarActionPerformed(evt);
             }
         });
-        jPanel1.add(continuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
+        jPanel1.add(continuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 350, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/planning a science investigation on....png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 270));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/gif v1.gif"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 270));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v1.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 420));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -84,7 +92,7 @@ public class Ventana1 extends javax.swing.JFrame {
         JFileChooser file=new JFileChooser();
         file.showOpenDialog(this);
         File abre =file.getSelectedFile();
-        LeerTxt txt = new LeerTxt();
+        LeerTxt txt = Main.txt;
         try {
             if (txt.cargarInfo(abre)){
             txt.cargarResumentxt(txt.getResumen());
@@ -96,7 +104,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void usarResumenesCargadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usarResumenesCargadosActionPerformed
         // TODO add your handling code here:
-        LeerTxt txt = new LeerTxt();
+        LeerTxt txt = Main.txt;
         try {
             File archivo = new File("resumenes.txt");
             //txt.leerResumenes(archivo);
@@ -161,6 +169,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton cargarResumen;
     private javax.swing.JButton continuar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton usarResumenesCargados;
     // End of variables declaration//GEN-END:variables

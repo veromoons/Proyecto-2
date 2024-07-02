@@ -5,8 +5,9 @@
  */
 package Clases;
 
+import Info.LeerTxt;
 import Interfaces.Ventana1;
-import Interfaces.Ventana3DePrueba;
+import Interfaces.Ventana3;
 
 /**
  *
@@ -14,16 +15,16 @@ import Interfaces.Ventana3DePrueba;
  */
 public class Main {
     
-    /**
-     * @param args the command line arguments
-     */
+    public static LeerTxt txt = new LeerTxt();
+    
     public static void main(String[] args) {
         Ventana1 v1 = new Ventana1();
         v1.setVisible(true);
         
+        
 //        VentanaPrueba vp = new VentanaPrueba();
 //        vp.setVisible(true);
-//        
+        
 
 
 

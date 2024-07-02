@@ -75,7 +75,7 @@ public class LeerTxt {
                 // Leer autores
                 while (line != null && !line.trim().equalsIgnoreCase("resumen")) {
                     if (!line.trim().equalsIgnoreCase("autores") && !line.trim().isEmpty()) {
-                        autores.insertarUltimo(line.trim());
+                        autores.preinsertarPrimero(line.trim());  //preinsertarprimero
                     }
                     line = br.readLine();
                 }
@@ -103,7 +103,7 @@ public class LeerTxt {
                     palabras.append(line.trim());
                     String[] palabrasSplit = palabras.toString().split(",\\s*|\\sy\\s|:\\s*|\\.\\s*");
                     for (int i = 1; i < palabrasSplit.length; i++) {
-                        palabrasClave.insertarUltimo(palabrasSplit[i].trim());
+                        palabrasClave.preinsertarPrimero(palabrasSplit[i].trim());   //preinsertarprimero
                     }
                 }
             }
@@ -115,6 +115,7 @@ public class LeerTxt {
                 this.setResumen(resumen);
                 this.getHashTitulos().insertarPorTitulo(resumen);
                 this.getHashPalabrasClave().insertarPorPalabraClave(resumen);
+                System.out.println(resumen.getPalabrasClave().recorrer());
                 this.getHashAutores().insertarPorAutor(resumen);
             }
         } catch (FileNotFoundException e) {
@@ -190,7 +191,7 @@ public class LeerTxt {
                 if (resumenSeparado[j].trim().equals("AUTORES")) {
                     String [] autoresSeparados = resumenSeparado[j+1].split(",");
                         for (int k = 0; k < autoresSeparados.length-1; k++) {
-                            autores.insertarUltimo(autoresSeparados[k]);
+                            autores.preinsertarPrimero(autoresSeparados[k].trim());
                     }
                         }
                 //Leer cuerpo  
@@ -201,33 +202,33 @@ public class LeerTxt {
                 if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")) {
                     String [] palabrasSeparada = resumenSeparado[j+1].split(",");
                         for (int k = 0; k< palabrasSeparada.length-1; k++) {
-                            palabrasClave.insertarUltimo(palabrasSeparada[k]);
+                            palabrasClave.preinsertarPrimero(palabrasSeparada[k].trim());
                     }
                         }
                 
                 if (j == resumenSeparado.length -1){
-                Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
-                //System.out.println("resumen" + i+ ":"+ resumenObj.mostrarResumen());
-                this.getHashTitulos().insertarPorTitulo(resumenObj);
-                this.getHashPalabrasClave().insertarPorPalabraClave(resumenObj);
-                this.getHashAutores().insertarPorAutor(resumenObj);
-                count++;
+                    Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
+                    //System.out.println("resumen" + i+ ":"+ resumenObj.mostrarResumen());
+                    this.getHashTitulos().insertarPorTitulo(resumenObj);
+                    //System.out.println(resumenObj.getPalabrasClave().recorrer());
+                    this.getHashPalabrasClave().insertarPorPalabraClave(resumenObj);
+                    this.getHashAutores().insertarPorAutor(resumenObj);
+                    count++;
                 
                 }
-                
-                
+               
                 
                 }
             }
                 
             
             if (count == resumenes.length-1){
-            guardado = true;
+                guardado = true;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    } 
     return guardado;
 }
 

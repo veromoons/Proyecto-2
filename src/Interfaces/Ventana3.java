@@ -7,20 +7,23 @@
 package Interfaces;
 
 import Clases.ListaResumen;
+import Clases.Main;
 import Info.LeerTxt;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author verol
  */
-public class Ventana3DePrueba extends javax.swing.JFrame {
+public class Ventana3 extends javax.swing.JFrame {
 
     /**
      * Creates new form VentanaPrueba
      */
-    public Ventana3DePrueba() {
+    public Ventana3() {
         initComponents();
         this.setLocationRelativeTo(this);
+        palabraABuscar.setText("");
     }
 
     /**
@@ -48,7 +51,7 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
                 botonBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(botonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+        jPanel1.add(botonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, -1, -1));
 
         listaResumenes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -57,18 +60,18 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaResumenes);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 320, 160));
-        jPanel1.add(palabraABuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 210, 30));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 390, 210));
+        jPanel1.add(palabraABuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 270, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
         );
 
         pack();
@@ -76,12 +79,13 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
 
-        ListaResumen resumenesEncontrados=LeerTxt.hashPalabrasClave.buscarPorPalabraClave(palabraABuscar.getText());
+        ListaResumen resumenesEncontrados=Main.txt.hashPalabrasClave.buscarPorPalabraClave(palabraABuscar.getText().trim());
         if (resumenesEncontrados != null && resumenesEncontrados.getiN()>0){
             System.out.println(resumenesEncontrados.recorrerResumenes());
         }
         else {
-            System.out.println("No hay con esta palabra clave");
+            JOptionPane.showMessageDialog(null,"No hay resumenes guardados con esta palabra clave.");
+            palabraABuscar.setText("");
         }
         
     }//GEN-LAST:event_botonBuscarActionPerformed
@@ -103,21 +107,23 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ventana3DePrueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ventana3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ventana3DePrueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ventana3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ventana3DePrueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ventana3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ventana3DePrueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ventana3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventana3DePrueba().setVisible(true);
+                new Ventana3().setVisible(true);
             }
         });
     }
