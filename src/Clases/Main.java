@@ -5,8 +5,9 @@
  */
 package Clases;
 
+import Info.LeerTxt;
 import Interfaces.Ventana1;
-import Interfaces.Ventana3DePrueba;
+import Interfaces.Ventana3;
 
 /**
  *
@@ -14,22 +15,22 @@ import Interfaces.Ventana3DePrueba;
  */
 public class Main {
     
-    /**
-     * @param args the command line arguments
-     */
+    public static LeerTxt txt = new LeerTxt();
+    
     public static void main(String[] args) {
         Ventana1 v1 = new Ventana1();
         v1.setVisible(true);
         
+        
 //        VentanaPrueba vp = new VentanaPrueba();
 //        vp.setVisible(true);
-//        
+        
 
 
 
 
 
-          //Pruebas NO BORRAR AUN !!!
+//          Pruebas NO BORRAR AUN !!!
 
 //        Lista palabrasClave1 = new Lista();
 //        palabrasClave1.preinsertarPrimero("vetiver");
@@ -72,7 +73,7 @@ public class Main {
 //        Hashtable hashAutores = new Hashtable(5000);
 //        hashAutores.insertarPorAutor(resumen1);
 //        hashAutores.insertarPorAutor(resumen2);
-                
+//                
 //        System.out.println(hashTitulos.buscarPorTitulo("Vetiver: planta magica").recorrerResumenes());
 //        System.out.println(hashAutores.buscarPorAutor("Julia Gomez").recorrerResumenes());
 //        System.out.println(hashPalabrasClave.buscarPorPalabraClave("magia").recorrerResumenes());
