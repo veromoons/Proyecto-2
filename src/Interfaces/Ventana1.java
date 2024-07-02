@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
  * @author berna
  */
 public class Ventana1 extends javax.swing.JFrame {
-
     /**
      * Creates new form Ventana1
      */
@@ -39,7 +38,8 @@ public class Ventana1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cargarResumen = new javax.swing.JButton();
         usarResumenesCargados = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        continuar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -52,7 +52,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 cargarResumenActionPerformed(evt);
             }
         });
-        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 230, -1, -1));
+        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
 
         usarResumenesCargados.setText("Usar resumenes precargados");
         usarResumenesCargados.addActionListener(new java.awt.event.ActionListener() {
@@ -60,17 +60,20 @@ public class Ventana1 extends javax.swing.JFrame {
                 usarResumenesCargadosActionPerformed(evt);
             }
         });
-        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
+        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 100, -1));
 
-        jButton1.setText("Continuar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        continuar.setText("Continuar");
+        continuar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                continuarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, -1, -1));
+        jPanel1.add(continuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 400));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/planning a science investigation on....png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 270));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 270));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -82,7 +85,6 @@ public class Ventana1 extends javax.swing.JFrame {
         LeerTxt txt = new LeerTxt();
         try {
             if (txt.cargarInfo(abre)){
-                //System.out.println("txt: "+ txt);
             txt.cargarResumentxt(txt.getResumen());}
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
@@ -106,11 +108,11 @@ public class Ventana1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_usarResumenesCargadosActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void continuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuarActionPerformed
         Ventana2 v2 = new Ventana2();
         v2.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_continuarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,7 +151,8 @@ public class Ventana1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarResumen;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton continuar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton usarResumenesCargados;
     // End of variables declaration//GEN-END:variables

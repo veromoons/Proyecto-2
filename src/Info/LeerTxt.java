@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 
 /**
- * Clase para obtener la informacion de cada resumen
+ * Clase para guardar y cargar informacion con documentos de texto en el programa
  * @author sofiagrateron
  */
 public class LeerTxt {
@@ -25,12 +25,16 @@ public class LeerTxt {
     public static Hashtable hashPalabrasClave;
     public static Hashtable hashAutores;
     Resumen resumen;
+
+    
     public LeerTxt() {
         this.hashTitulos = new Hashtable(10000);
         this.hashPalabrasClave = new Hashtable(10000);
         this.hashAutores = new Hashtable(10000);
         this.resumen = null;
     }
+
+
     public String findNextNotEmpty(BufferedReader br) throws IOException {
         String line = br.readLine();
         while (br.readLine().length() ==0 ){
@@ -38,6 +42,13 @@ public class LeerTxt {
         }
         return line;
     }
+    
+    /**
+     * Funcion para cargar la informacion de un resumen nuevo en el programa
+     * @param abre, documento escogido en el JFileChooser por el usuario
+     * @return booleano true, si fue guardada la informacion
+     * @throws IOException 
+     */
     public boolean cargarInfo(File abre) throws IOException {
     boolean guardado = false;
     String line;
@@ -70,14 +81,14 @@ public class LeerTxt {
                 }
 
                 // Leer resumen
-                System.out.println("line: "+line);
+                //System.out.println("line: "+line);
                 while (line != null && !line.trim().isEmpty() && !line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves")) {
                     if (!line.trim().equalsIgnoreCase("resumen") && !line.trim().isEmpty()) {
                         cuerpo.append(line.trim()).append(" ");
                     }
                     line = br.readLine();
                 }
-                System.out.println("line: "+line);
+                //System.out.println("line: "+line);
                 // Saltar líneas en blanco hasta encontrar "Palabras Claves:"
                 while (line != null && line.trim().isEmpty()) {
                     line = br.readLine();
@@ -117,12 +128,15 @@ public class LeerTxt {
     return guardado;
 }
 
-    
+    /**
+     * Funcion para cargar la informacion del resumen escogido por el usuario en el TXT de todos los resumenes guardados en el programa
+     * @param resumen 
+     */
     public void cargarResumentxt(Resumen resumen){
-        System.out.println("---resumen---");
+        //System.out.println("---resumen---");
        String resumenCargar;
        resumenCargar = resumen.mostrarResumen() + "\n%\n";
-        System.out.println(resumenCargar);
+        //System.out.println(resumenCargar);
         try{
             File archivo = new File("resumenes.txt");
             if (!archivo.exists()){
@@ -139,6 +153,12 @@ public class LeerTxt {
         }
     }
     
+   /**
+    * Funcion para leer los resumenes guardados en el TXT y guardar su informacion en el programa
+    * @param abre, archivo txt
+    * @return booleano true, si la informacion pudo ser leida
+    * @throws IOException 
+    */ 
    public boolean leerResumenesTxt(File abre) throws IOException {
     boolean guardado = false;
     if (abre != null) {
@@ -149,43 +169,60 @@ public class LeerTxt {
             while ((line = br.readLine()) != null) {
                 texto.append(line).append("\n");
             }
+            int count = 0;
+            //Separar los resumenes
             String[] resumenes = texto.toString().split("%");
-            for (String resumen : resumenes) {
+            for (int i = 0; i < resumenes.length; i++) {
                 String titulo = "";
-                String cuerpo = "";
-                Lista autores = new Lista();
-                Lista palabrasClave = new Lista();
-                String[] resumenSeparado = resumen.split("\n");
-                if (resumenSeparado.length > 1) {
-                    titulo = resumenSeparado[1];
-                }
+            String cuerpo = "";
+            Lista autores = new Lista();
+            Lista palabrasClave = new Lista();
+            //Separar cada resumen por salto de linea
+            String[] resumenSeparado = resumenes[i].split("\n");
                 for (int j = 0; j < resumenSeparado.length; j++) {
-                    if (resumenSeparado[j].equals("AUTORES ")) {
-                        int z = j + 1;
-                        while (z < resumenSeparado.length && !resumenSeparado[z].equals("")) {
-                            autores.insertarUltimo(resumenSeparado[z]);
-                            z++;
-                        }
+                //Leer titulo
+               if(j==0){
+               titulo = resumenSeparado[0];}
+               else{
+                   titulo = resumenSeparado[1];
+               }
+               //Leer autores
+                if (resumenSeparado[j].trim().equals("AUTORES")) {
+                    String [] autoresSeparados = resumenSeparado[j+1].split(",");
+                        for (int k = 0; k < autoresSeparados.length-1; k++) {
+                            autores.insertarUltimo(autoresSeparados[k]);
                     }
-                    if (resumenSeparado[j].trim().equals("RESUMEN")) {
-                        if (j + 1 < resumenSeparado.length) {
-                            cuerpo = resumenSeparado[j + 1];
                         }
+                //Leer cuerpo  
+                if (resumenSeparado[j].trim().equals("RESUMEN")) {
+                     cuerpo = resumenSeparado[j + 1];  
                     }
-                    if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")) {
-                        int x = j + 1;
-                        while (x < resumenSeparado.length && !resumenSeparado[x].equals("")) {
-                            palabrasClave.insertarUltimo(resumenSeparado[x]);
-                            x++;
+                //Leer palabras clave
+                if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")) {
+                    String [] palabrasSeparada = resumenSeparado[j+1].split(",");
+                        for (int k = 0; k< palabrasSeparada.length-1; k++) {
+                            palabrasClave.insertarUltimo(palabrasSeparada[k]);
+                    }
                         }
-                    }
-                }
+                
+                if (j == resumenSeparado.length -1){
                 Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
                 this.hashTitulos.insertarPorTitulo(resumenObj);
                 this.hashPalabrasClave.insertarPorPalabraClave(resumenObj);
                 this.hashAutores.insertarPorAutor(resumenObj);
+                count++;
+                
+                }
+                
+                
+                
+                }
             }
+                
+            
+            if (count == resumenes.length-1){
             guardado = true;
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -196,11 +233,17 @@ public class LeerTxt {
     
     
     
-
+   /**
+    * Funcion para obtener el resumen
+    * @return resumen
+    */
     public Resumen getResumen() {
         return resumen;
     }
-
+    /**
+     * Funcion para asignar el resumen 
+     * @param resumen 
+     */
     public void setResumen(Resumen resumen) {
         this.resumen = resumen;
     }

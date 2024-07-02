@@ -76,7 +76,12 @@ public class Ventana3DePrueba extends javax.swing.JFrame {
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         ListaResumen resumenesEncontrados=LeerTxt.hashPalabrasClave.buscarPorPalabraClave(palabraABuscar.getText());
-        System.out.println(resumenesEncontrados.recorrerResumenes());
+        if (resumenesEncontrados != null && resumenesEncontrados.getiN()>0){
+            System.out.println(resumenesEncontrados.recorrerResumenes());
+        }
+        else {
+            System.out.println("No hay con esta palabra clave");
+        }
         
     }//GEN-LAST:event_botonBuscarActionPerformed
 
