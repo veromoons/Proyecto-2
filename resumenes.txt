@@ -14,6 +14,7 @@ Los frameworks de diseño son conjuntos articulados de elementos y componentes g
 PALABRAS CLAVES: 
 diseño, componentes, sistema de diseño, Grid, hojas de estilo, UX/UI, 
 %
+<<<<<<< HEAD
 GraphQL vs REST: una comparación desde la perspectiva de eficiencia de desempeño.
 AUTORES 
 Reynaldo Quintero, Asher Kleiman, 
@@ -118,3 +119,5 @@ Los procesos de internacionalización y localización inciden directamente en la
 PALABRAS CLAVES: 
 análisis de dominio, ingeniería de dominio, PHP, arquitectura referencial, internacionalización, localización, 
 %
+=======
+>>>>>>> development

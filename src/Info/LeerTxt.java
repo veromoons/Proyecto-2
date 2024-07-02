@@ -24,7 +24,7 @@ public class LeerTxt {
     public static Hashtable hashTitulos;
     public static Hashtable hashPalabrasClave;
     public static Hashtable hashAutores;
-    Resumen resumen;
+    private Resumen resumen;
 
     
     public LeerTxt() {
@@ -112,10 +112,10 @@ public class LeerTxt {
 
             if (guardado) {
                 Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
-                this.resumen = resumen;
-                this.hashTitulos.insertarPorTitulo(resumen);
-                this.hashPalabrasClave.insertarPorPalabraClave(resumen);
-                this.hashAutores.insertarPorAutor(resumen);
+                this.setResumen(resumen);
+                this.getHashTitulos().insertarPorTitulo(resumen);
+                this.getHashPalabrasClave().insertarPorPalabraClave(resumen);
+                this.getHashAutores().insertarPorAutor(resumen);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -181,7 +181,7 @@ public class LeerTxt {
             String[] resumenSeparado = resumenes[i].split("\n");
                 for (int j = 0; j < resumenSeparado.length; j++) {
                 //Leer titulo
-               if(j==0){
+               if(count == 0){
                titulo = resumenSeparado[0];}
                else{
                    titulo = resumenSeparado[1];
@@ -207,9 +207,10 @@ public class LeerTxt {
                 
                 if (j == resumenSeparado.length -1){
                 Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
-                this.hashTitulos.insertarPorTitulo(resumenObj);
-                this.hashPalabrasClave.insertarPorPalabraClave(resumenObj);
-                this.hashAutores.insertarPorAutor(resumenObj);
+                //System.out.println("resumen" + i+ ":"+ resumenObj.mostrarResumen());
+                this.getHashTitulos().insertarPorTitulo(resumenObj);
+                this.getHashPalabrasClave().insertarPorPalabraClave(resumenObj);
+                this.getHashAutores().insertarPorAutor(resumenObj);
                 count++;
                 
                 }
@@ -246,6 +247,48 @@ public class LeerTxt {
      */
     public void setResumen(Resumen resumen) {
         this.resumen = resumen;
+    }
+
+    /**
+     * @return the hashTitulos
+     */
+    public static Hashtable getHashTitulos() {
+        return hashTitulos;
+    }
+
+    /**
+     * @param aHashTitulos the hashTitulos to set
+     */
+    public static void setHashTitulos(Hashtable aHashTitulos) {
+        hashTitulos = aHashTitulos;
+    }
+
+    /**
+     * @return the hashPalabrasClave
+     */
+    public static Hashtable getHashPalabrasClave() {
+        return hashPalabrasClave;
+    }
+
+    /**
+     * @param aHashPalabrasClave the hashPalabrasClave to set
+     */
+    public static void setHashPalabrasClave(Hashtable aHashPalabrasClave) {
+        hashPalabrasClave = aHashPalabrasClave;
+    }
+
+    /**
+     * @return the hashAutores
+     */
+    public static Hashtable getHashAutores() {
+        return hashAutores;
+    }
+
+    /**
+     * @param aHashAutores the hashAutores to set
+     */
+    public static void setHashAutores(Hashtable aHashAutores) {
+        hashAutores = aHashAutores;
     }
     
 
