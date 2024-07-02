@@ -42,7 +42,6 @@ public class Ventana1 extends javax.swing.JFrame {
         cargarResumen = new javax.swing.JButton();
         usarResumenesCargados = new javax.swing.JButton();
         continuar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,9 +75,6 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(continuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 350, -1, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/gif v1.gif"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v1.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 420));
@@ -168,7 +164,6 @@ public class Ventana1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarResumen;
     private javax.swing.JButton continuar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton usarResumenesCargados;
