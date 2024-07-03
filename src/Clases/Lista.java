@@ -84,13 +84,26 @@ public class Lista {
         else{
             Nodo temp = getFirst();
             while (temp != null){
-                imprimir += temp.getInfo() + ", ";
+                imprimir += temp.getInfo() + ",";
                 temp = temp.getNext();
             }
         }
         return imprimir;
     }
     
+    public boolean buscar(Lista lista, String aBuscar){
+        boolean encontrado = false;
+        if (!lista.esVacia()){
+            Nodo temp = lista.getFirst();
+            while (temp != null){
+                if(temp.getInfo().trim().equals(aBuscar.trim())){
+                    encontrado = true;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return encontrado;
+    }
     
     /**
      * Metodo para obtener el pimer elemento de la lista

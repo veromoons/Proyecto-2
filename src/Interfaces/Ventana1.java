@@ -82,11 +82,18 @@ public class Ventana1 extends javax.swing.JFrame {
         File abre =file.getSelectedFile();
         LeerTxt txt = new LeerTxt();
         try {
+            File archivo = new File("resumenes.txt");
+            txt.guardarCuerpos(archivo);
             if (txt.cargarInfo(abre)){
-            txt.cargarResumentxt(txt.getResumen());
-            this.cargado = true;}
+                this.cargado =true;
+                JOptionPane.showMessageDialog(this, "Informacion guardada exitosamente!");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo. Recuerde que el resumen debe tener titulo, autores, cuerpo y palabras clave. No debe estar repetido ");
+            }
+            
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo");
+            JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo. Recuerde que el resumen debe tener titulo, autores, cuerpo y palabras clave. No debe estar repetido ");
         }
     }//GEN-LAST:event_cargarResumenActionPerformed
 

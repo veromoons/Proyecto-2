@@ -25,6 +25,7 @@ public class LeerTxt {
     private static Hashtable hashPalabrasClave;
     private static Hashtable hashAutores;
     private Resumen resumen;
+    private Lista cuerpos;
 
     
     public LeerTxt() {
@@ -32,6 +33,7 @@ public class LeerTxt {
         this.hashPalabrasClave = new Hashtable(10000);
         this.hashAutores = new Hashtable(10000);
         this.resumen = null;
+        this.cuerpos = new Lista();
     }
 
 
@@ -44,7 +46,7 @@ public class LeerTxt {
     }
     
     /**
-     * Funcion para cargar la informacion de un resumen nuevo en el programa
+     * Funcion para cargar la informacion de un resumen nuevo al txt
      * @param abre, documento escogido en el JFileChooser por el usuario
      * @return booleano true, si fue guardada la informacion
      * @throws IOException 
@@ -108,31 +110,42 @@ public class LeerTxt {
                 }
             }
 
-            guardado = true;
-
-            if (guardado) {
+            if (!this.revisarRepetido(cuerpo.toString())){
+             this.cuerpos.insertarUltimo(cuerpo.toString());
+                //System.out.println(this.cuerpos.recorrer());
                 Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
                 this.setResumen(resumen);
-                this.getHashTitulos().insertarPorTitulo(resumen);
-                this.getHashPalabrasClave().insertarPorPalabraClave(resumen);
-                this.getHashAutores().insertarPorAutor(resumen);
+                this.cargarResumentxt(resumen);
+                guardado = true;
+                //this.getHashTitulos().insertarPorTitulo(resumen);
+                //this.getHashPalabrasClave().insertarPorPalabraClave(resumen);
+                //this.getHashAutores().insertarPorAutor(resumen);
+                }
+            
+            else{
+                guardado = false;
             }
-        } catch (FileNotFoundException e) {
+            }
+         catch (FileNotFoundException e) {
             e.printStackTrace();
             guardado = false;
         } catch (IOException e) {
             e.printStackTrace();
             guardado = false;
         }
+        
     }
     return guardado;
-}
+    }
+    
+
 
     /**
      * Funcion para cargar la informacion del resumen escogido por el usuario en el TXT de todos los resumenes guardados en el programa
      * @param resumen 
      */
-    public void cargarResumentxt(Resumen resumen){
+    public boolean cargarResumentxt(Resumen resumen){
+        boolean guardado = false;
         //System.out.println("---resumen---");
        String resumenCargar;
        resumenCargar = resumen.mostrarResumen() + "\n%\n";
@@ -145,12 +158,14 @@ public class LeerTxt {
             PrintWriter pw = new PrintWriter(new FileWriter(archivo, true));
             pw.print(resumenCargar);
             pw.close();
-            JOptionPane.showMessageDialog(null, "Guardado exitoso en" + archivo.getAbsolutePath());
+            guardado = true;
+            //JOptionPane.showMessageDialog(null, "Guardado exitoso en" + archivo.getAbsolutePath());
             
         }
         catch (Exception err){
             JOptionPane.showMessageDialog(null, "ERROR" + err.getMessage());
         }
+        return guardado;
     }
     
    /**
@@ -169,6 +184,7 @@ public class LeerTxt {
             while ((line = br.readLine()) != null) {
                 texto.append(line).append("\n");
             }
+            if (!texto.toString().equals("") &&!texto.toString().equals("\n") ){
             int count = 0;
             //Separar los resumenes
             String[] resumenes = texto.toString().split("%");
@@ -195,7 +211,7 @@ public class LeerTxt {
                         }
                 //Leer cuerpo  
                 if (resumenSeparado[j].trim().equals("RESUMEN")) {
-                     cuerpo = resumenSeparado[j + 1];  
+                     cuerpo = resumenSeparado[j + 1];
                     }
                 //Leer palabras clave
                 if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")) {
@@ -224,12 +240,64 @@ public class LeerTxt {
             if (count == resumenes.length-1){
             guardado = true;
             }
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
     return guardado;
 }
+   public void guardarCuerpos(File abre) throws IOException{
+       boolean repetido= false;
+       if (abre != null) {
+        try (FileReader fr = new FileReader(abre);
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            StringBuilder texto = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                texto.append(line).append("\n");
+            }
+            int count = 0;
+            //Separar los resumenes
+            String[] resumenes = texto.toString().split("%");
+            
+            for (int i = 0; i < resumenes.length; i++) {
+                System.out.println("resumen" + i + ":  "+ resumenes[i]);
+            String cuerpo = "";
+            
+            //Separar cada resumen por salto de linea
+            String[] resumenSeparado = resumenes[i].split("\n");
+                for (int j = 0; j < resumenSeparado.length; j++) {
+                    
+                //Leer cuerpo  
+                if (resumenSeparado[j].trim().equalsIgnoreCase("RESUMEN")) {
+                     cuerpo = resumenSeparado[j + 1];
+                     this.cuerpos.insertarUltimo(cuerpo);
+                     
+                    }
+            
+        
+            }
+                
+        } 
+            
+            }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+           
+   
+   }
+        
+        
+       }
+   public boolean revisarRepetido(String cuerpo){
+       boolean repetido = false;
+       //System.out.println(this.cuerpos.recorrer());
+       if (this.cuerpos.buscar(this.cuerpos, cuerpo)){
+           repetido = true;
+       }
+       return repetido;
+   }
 
     
     
