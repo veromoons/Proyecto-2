@@ -14,21 +14,26 @@ public class Resumen {
     private Lista palabrasClave;
     
     //Constructor
-    public Resumen(String titulo, String cuerpo, Lista autores, Lista palabrasClave) {
+    public Resumen(String titulo, Lista autores, String cuerpo, Lista palabrasClave) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autores = autores;
         this.palabrasClave = palabrasClave;
     }
     
+    public String getInfoResumen(){
+        return "Titulo: " + this.titulo + "\n" + "Autores: "+ this.autores.recorrer() +"\n" + "Palabras clave: " + this.palabrasClave.recorrer();
+    }
+    
     public String mostrarResumen(){
         String resumenCargar = "";
-        resumenCargar += titulo + "\n\n";
-        resumenCargar += "AUTORES \n" + autores.imprimir_lista() + "\n";
+        resumenCargar += titulo+"\n";
+        resumenCargar += "AUTORES \n" + autores.recorrer() + "\n";
         resumenCargar += "RESUMEN \n" + cuerpo + "\n";
-        resumenCargar += "PALABRAS CLAVES: \n" + palabrasClave.imprimir_lista();
+        resumenCargar += "PALABRAS CLAVES: \n" + palabrasClave.recorrer();
         return resumenCargar;
     }
+    
     /**
      * @return the titulo
      */

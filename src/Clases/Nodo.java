@@ -2,7 +2,7 @@
 package Clases;
 
 /**
- *Clase para implementar setters y getters del nodo que va a contener la lista de la clase Lista
+ *Clase para 
  *.
  * @author sofiagrateron
  */

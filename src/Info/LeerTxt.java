@@ -7,7 +7,6 @@ package Info;
 import Clases.Hashtable;
 import Clases.Lista;
 import Clases.Resumen;
-import Clases.Hashtable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,122 +15,142 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
+import Clases.NodoResumen;
 
 /**
- * Clase para obtener la informacion de cada resumen
- * @author sofiagrateron
+ * Clase para guardar y cargar informacion con documentos de texto en el programa
+ * @author sofiagrateron, ruthsenior
  */
 public class LeerTxt {
-    Hashtable tabla;
-<<<<<<< HEAD
+    public static Hashtable hashTitulos;
+    public static Hashtable hashPalabrasClave;
+    public static Hashtable hashAutores;
+    private Resumen resumen;
+    private Lista cuerpos;
+
     
     public LeerTxt() {
-        this.tabla = new Hashtable(10000);
-    }
-    
-    public boolean cargarResumen(File abre) throws FileNotFoundException, IOException{
-=======
-    Resumen resumen;
-    public LeerTxt() {
-        this.tabla = new Hashtable(10000);
+        this.hashTitulos = new Hashtable(10000);
+        this.hashPalabrasClave = new Hashtable(10000);
+        this.hashAutores = new Hashtable(10000);
         this.resumen = null;
+        this.cuerpos = new Lista();
     }
-    
-    public boolean cargarInfo(File abre) throws FileNotFoundException, IOException{
->>>>>>> sofia
-        boolean guardado = false;
-        String line;
-        String titulo = "";
-        String cuerpo = "";
-        String palabras = "";
-        Lista autores = new Lista();
-        Lista palabrasClave = new Lista();
-        if(abre!=null){
-            try {
-                FileReader fr = new FileReader(abre);
-                BufferedReader br = new BufferedReader(fr);
-                    
-                if((line = br.readLine().toUpperCase()) != null){
-                    line = line.trim();
-                    titulo = line;
-<<<<<<< HEAD
-                    line = br.readLine();
-                    if (line.isEmpty())continue;
-                    else {
-                        while (!line.toLowerCase().equals("resumen")){
-=======
-                    line= br.readLine();
-                    //if (line.isEmpty()) continue;
-                    //else {
-                        while (!line.trim().equalsIgnoreCase("resumen")){
->>>>>>> sofia
-                            if (!line.equalsIgnoreCase("autores") && !line.equalsIgnoreCase("")){
-                                    autores.insertarUltimo(line);}
-                            line = br.readLine();
-                        }
-                        while (!line.trim().toLowerCase().equals("") && line.charAt(0)!='P'){
-                            if (!line.equalsIgnoreCase("resumen") && !line.equalsIgnoreCase("")){
-                                cuerpo += line +" ";
-                        }
-                            line = br.readLine();
-                        }
-                        while (line.equals("")){
-                            line = br.readLine();
-                        }
-                        palabras += line;
-<<<<<<< HEAD
-                        palabras = palabras.replace("Palabras Claves: ", " ");
-                        palabras = palabras.replace(".", " ");
-                        String [] palabrasSplit = palabras.split(",\\s*|\\sy\\s");
-                        for (int i = 0; i < palabrasSplit.length; i++) {
-=======
-                        //palabras = palabras.replace("Palabras Claves: ", " ");
-                        String [] palabrasSplit = palabras.split(",\\s*|\\sy\\s|:\\s*|\\.\\s*");
-                        for (int i = 1; i < palabrasSplit.length; i++) {
->>>>>>> sofia
-                            //System.out.println(palabrasSplit[i]);
-                            palabrasClave.insertarUltimo(palabrasSplit[i].trim());
-                        }
-                        
-                            
-                    
-                }
-<<<<<<< HEAD
-                     guardado = true;
-                     Resumen resumen = new Resumen(titulo, cuerpo, autores, palabrasClave);
-                     this.tabla.insertar(resumen);
-=======
-                
-                guardado = true;
-                
-                  if (guardado){
-            Resumen resumen =  new Resumen(titulo, cuerpo, autores, palabrasClave);
-            this.tabla.insertar(resumen);
-                  }
-                     
->>>>>>> sofia
-                }
-            
-             catch(Exception err){
-                    }
-<<<<<<< HEAD
-            System.out.println(titulo);
-            System.out.println(autores.imprimir_lista());
-            System.out.println(cuerpo);
-            System.out.println(palabrasClave.imprimir_lista());
-=======
-            
->>>>>>> sofia
+
+
+    public String findNextNotEmpty(BufferedReader br) throws IOException {
+        String line = br.readLine();
+        while (br.readLine().length() ==0 ){
+            line = br.readLine();
         }
-          return guardado;  
+        return line;
     }
-    public void guardarResumen(){
     
-}
+    /**
+     * Funcion para cargar la informacion de un resumen nuevo al txt
+     * @param abre, documento escogido en el JFileChooser por el usuario
+     * @return booleano true, si fue guardada la informacion
+     * @throws IOException 
+     */
+    public boolean cargarInfo(File abre) throws IOException {
+    boolean guardado = false;
+    String line;
+    String titulo = "";
+    StringBuilder cuerpo = new StringBuilder();
+    StringBuilder palabras = new StringBuilder();
+    Lista autores = new Lista();
+    Lista palabrasClave = new Lista();
+
+    if (abre != null) {
+        try (FileReader fr = new FileReader(abre);
+             BufferedReader br = new BufferedReader(fr)) {
+
+            if ((line = br.readLine()) != null ) {
+                if (line.length()==0){
+                    
+                    line = findNextNotEmpty(br);
+                }
+                titulo = line.trim();
+                
+                line = findNextNotEmpty(br);
+                
+
+                // Leer autores
+                while (line != null && !line.trim().equalsIgnoreCase("resumen")) {
+                    if (!line.trim().equalsIgnoreCase("autores") && !line.trim().isEmpty()) {
+                        autores.preinsertarPrimero(line.trim());  //preinsertarprimero
+                    }
+                    line = br.readLine();
+                }
+
+                // Leer resumen
+                //System.out.println("line: "+line);
+                while (line != null && !line.trim().isEmpty() && !line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves")) {
+                    if (!line.trim().equalsIgnoreCase("resumen") && !line.trim().isEmpty()) {
+                        cuerpo.append(line.trim()).append(" ");
+                    }
+                    line = br.readLine();
+                }
+                //System.out.println("line: "+line);
+                // Saltar líneas en blanco hasta encontrar "Palabras Claves:"
+                while (line != null && line.trim().isEmpty()) {
+                    line = br.readLine();
+                }
+
+                // Leer palabras clave
+//                System.out.println("---line---");
+//                System.out.println(line.trim().split(":")[0]);
+//                System.out.println(line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves"));
+
+                if (line != null && line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves")) {
+                    palabras.append(line.trim());
+                    String[] palabrasSplit = palabras.toString().split(",\\s*|\\sy\\s|:\\s*|\\.\\s*");
+                    for (int i = 1; i < palabrasSplit.length; i++) {
+                        palabrasClave.preinsertarPrimero(palabrasSplit[i].trim());   //preinsertarprimero
+                    }
+                }
+            }
+
+            if (!this.revisarRepetido(cuerpo.toString())){
+             this.cuerpos.insertarUltimo(cuerpo.toString());
+                //System.out.println(this.cuerpos.recorrer());
+                Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
+                this.setResumen(resumen);
+                this.cargarResumentxt(resumen);
+                guardado = true;
+                //this.getHashTitulos().insertarPorTitulo(resumen);
+                //this.getHashPalabrasClave().insertarPorPalabraClave(resumen);
+                //this.getHashAutores().insertarPorAutor(resumen);
+                }
+            
+            else{
+                guardado = false;
+            }
+            }
+         catch (FileNotFoundException e) {
+            e.printStackTrace();
+            guardado = false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            guardado = false;
+        }
+        
+    }
+    return guardado;
+    }
     
-    public void cargarResumentxt(Resumen resumen){
+
+
+    /**
+     * Funcion para cargar la informacion del resumen escogido por el usuario en el TXT de todos los resumenes guardados en el programa
+     * @param resumen 
+     */
+    public boolean cargarResumentxt(Resumen resumen){
+        boolean guardado = false;
+        //System.out.println("---resumen---");
        String resumenCargar;
-       resumenCargar = "\n" + resumen.mostrarResumen() + "\n %";
+       resumenCargar = resumen.mostrarResumen() + "\n%\n";
+        //System.out.println(resumenCargar);
         try{
             File archivo = new File("resumenes.txt");
             if (!archivo.exists()){
@@ -140,87 +159,311 @@ public class LeerTxt {
             PrintWriter pw = new PrintWriter(new FileWriter(archivo, true));
             pw.print(resumenCargar);
             pw.close();
-            JOptionPane.showMessageDialog(null, "Guardado exitoso en" + archivo.getAbsolutePath());
+            guardado = true;
+            //JOptionPane.showMessageDialog(null, "Guardado exitoso en" + archivo.getAbsolutePath());
             
         }
         catch (Exception err){
             JOptionPane.showMessageDialog(null, "ERROR" + err.getMessage());
         }
-    }
-    
-    public boolean leerResumenesTxt(File abre) throws IOException{
-       boolean guardado = false;
-        if(abre!=null){
-            try {
-                String line;
-                String texto = "";
-                FileReader fr = new FileReader(abre);
-                BufferedReader br = new BufferedReader(fr);
-                while((line = br.readLine()) != null){
-                    texto += line + "\n";
-                }
-                String[]resumenes= texto.split("%");
-                for (int i = 0; i < resumenes.length; i++) {
-                    //System.out.println(resumenes[i]);
-                    String titulo = "";
-                    String cuerpo = "";
-                    String palabras = "";
-                    Lista autores = new Lista();
-                    Lista palabrasClave = new Lista();
-                    String [] resumenSeparado = resumenes[i].split("\n");
-                    titulo = resumenSeparado[1];
-                    for (int j = 0; j < resumenSeparado.length; j++) {
-                        //System.out.println(resumenSeparado[j]);
-                        if (resumenSeparado[j].equals("AUTORES ")){
-                            int z =j+1;
-                            while(!resumenSeparado[z].equals("")){
-                                //System.out.println(z);
-                                autores.insertarUltimo(resumenSeparado[z]);
-                                z++;
-                            }
-                            }
-                        if (resumenSeparado[j].trim().equals("RESUMEN")){
-                            //System.out.println(resumenSeparado[j+1]);
-                            cuerpo += resumenSeparado[j+1];
-                        }
-                        if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")){
-                            int x = j+1;
-                            while (!resumenSeparado[x].equals("")){
-                              palabrasClave.insertarUltimo(resumenSeparado[x]);
-                            x++;
-                            }
-                        }
-                        }
-                        Resumen resumen =  new Resumen(titulo, cuerpo, autores, palabrasClave);
-                        this.tabla.insertar(resumen);
-                        System.out.println(titulo);
-                System.out.println(autores.imprimir_lista());
-                System.out.println(cuerpo);
-                System.out.println(palabrasClave.imprimir_lista());
-                        
-                    
-                }
-                
-                guardado = true;
-                
-            }
-            catch(FileNotFoundException er){
-                    
-                    }
-    }
         return guardado;
     }
     
-    
-    
-    
+   /**
+    * Funcion para leer los resumenes guardados en el TXT y guardar su informacion en el programa
+    * @param abre, archivo txt
+    * @return booleano true, si la informacion pudo ser leida
+    * @throws IOException 
+    */ 
+   public boolean leerResumenesTxt(File abre) throws IOException {
+    boolean guardado = false;
+    if (abre != null) {
+        try (FileReader fr = new FileReader(abre);
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            StringBuilder texto = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                texto.append(line).append("\n");
+            }
+            if (!texto.toString().equals("") &&!texto.toString().equals("\n") ){
+            int count = 0;
+            //Separar los resumenes
+            String[] resumenes = texto.toString().split("%");
+            for (int i = 0; i < resumenes.length; i++) {
+                String titulo = "";
+            String cuerpo = "";
+            Lista autores = new Lista();
+            Lista palabrasClave = new Lista();
+            //Separar cada resumen por salto de linea
+            String[] resumenSeparado = resumenes[i].split("\n");
+                for (int j = 0; j < resumenSeparado.length; j++) {
+                //Leer titulo
+               if(count == 0){
+               titulo = resumenSeparado[0];}
+               else{
+                   titulo = resumenSeparado[1];
+               }
+               //Leer autores
+                if (resumenSeparado[j].trim().equals("AUTORES")) {
+                    String [] autoresSeparados = resumenSeparado[j+1].split(",");
+                        for (int k = 0; k < autoresSeparados.length-1; k++) {
+                            autores.preinsertarPrimero(autoresSeparados[k].trim());
+                    }
+                        }
+                //Leer cuerpo  
+                if (resumenSeparado[j].trim().equals("RESUMEN")) {
+                     cuerpo = resumenSeparado[j + 1];
+                    }
+                //Leer palabras clave
+                if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")) {
+                    String [] palabrasSeparada = resumenSeparado[j+1].split(",");
+                        for (int k = 0; k< palabrasSeparada.length-1; k++) {
+                            palabrasClave.preinsertarPrimero(palabrasSeparada[k].trim());
+                    }
+                        }
+                
+                if (j == resumenSeparado.length -1){
+                    Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
+                    //System.out.println("resumen" + i+ ":"+ resumenObj.mostrarResumen());
+                    this.getHashTitulos().insertarPorTitulo(resumenObj);
+                    //System.out.println(resumenObj.getPalabrasClave().recorrer());
+                    this.getHashPalabrasClave().insertarPorPalabraClave(resumenObj);
+                    this.getHashAutores().insertarPorAutor(resumenObj);
+                    count++;
+                
+                }
+               
+                
+                }
+            }
+                
+            
+            if (count == resumenes.length-1){
+                guardado = true;
+            }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    } 
+    return guardado;
+}
+   
+   public void guardarCuerpos(File abre) throws IOException{
+       boolean repetido= false;
+       if (abre != null) {
+        try (FileReader fr = new FileReader(abre);
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            StringBuilder texto = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                texto.append(line).append("\n");
+            }
+            int count = 0;
+            //Separar los resumenes
+            String[] resumenes = texto.toString().split("%");
+            
+            for (int i = 0; i < resumenes.length; i++) {
+                System.out.println("resumen" + i + ":  "+ resumenes[i]);
+            String cuerpo = "";
+            
+            //Separar cada resumen por salto de linea
+            String[] resumenSeparado = resumenes[i].split("\n");
+                for (int j = 0; j < resumenSeparado.length; j++) {
+                    
+                //Leer cuerpo  
+                if (resumenSeparado[j].trim().equalsIgnoreCase("RESUMEN")) {
+                     cuerpo = resumenSeparado[j + 1];
+                     this.cuerpos.insertarUltimo(cuerpo);
+                     
+                    }
+            
+        
+            }
+                
+        } 
+            
+            }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+           
 
+   }
+        
+        
+       }
+   public boolean revisarRepetido(String cuerpo){
+       boolean repetido = false;
+       //System.out.println(this.cuerpos.recorrer());
+       if (this.cuerpos.buscar(this.cuerpos, cuerpo)){
+           repetido = true;
+       }
+       return repetido;
+   }
+
+   public void analizarResumen() {
+       String[] titulos = obtenerTitulos();
+       ordenarTitulos(titulos);
+       
+       System.out.println("Resumenes Guardados:");
+       for (int i = 0; i < titulos.length; i++) {
+           System.out.println((1+i) + ". " + titulos[i]);
+       }
+       
+       int seleccion = obtenerSeleccion(titulos.length);
+       String tituloSeleccionado = titulos[seleccion - 1];
+       Resumen resumenSeleccionado = obtenerResumen(tituloSeleccionado);
+       if(resumenSeleccionado != null) {
+           imprimirEstadisticas(resumenSeleccionado);
+           
+       } else {
+           System.out.println("No se ha encontrado el resumen");
+       }
+   } 
+   
+   private String[] obtenerTitulos() {
+       Lista titulosLista = new Lista();
+       for (int i = 0; i < hashTitulos.getSize(); i++) {
+           NodoResumen nodo = hashTitulos.getNodo(i);
+           while(nodo != null) {
+               titulosLista.insertarUltimo(nodo.getInfo().getTitulo());
+               nodo = nodo.getNext();
+           }
+       }
+       
+       return titulosLista.toArray();
+   }
+   
+   private void ordenarTitulos(String[]titulos) {
+       for (int i = 0; i< titulos.length - 1; i++) {
+       for (int j = 0; j < titulos.length - i - 1; j++) {
+           if (titulos[j].compareTo(titulos[j + 1]) > 0) {
+               String temp = titulos[j];
+               titulos[j] = titulos[j + 1];
+               titulos [j+1] = temp;
+           }
+       }
+   }
+ } 
+   
+ private int obtenerSeleccion(int max) {
+    int seleccion = -1;
+    do {
+        try {
+            String input = JOptionPane.showInputDialog("Selecciona el número del resumen:");
+            if (input == null) {
+                // El usuario canceló la operación
+                return -1;
+            }
+            seleccion = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Selección inválida. Introduce un número válido.");
+        }
+    } while (seleccion < 1 || seleccion > max);
+
+    return seleccion;
+}
+
+   
+   private Resumen obtenerResumen(String titulo) {
+       for (int i = 0; i < hashTitulos.getSize(); i++) {
+           NodoResumen nodo = hashTitulos.getNodo(i);
+           while (nodo !=null) {
+               if (nodo.getInfo().getTitulo().equalsIgnoreCase(titulo)) {
+                   return nodo.getInfo();
+               }
+               nodo = nodo.getNext();
+           }
+       }
+       
+       return null;
+   }
+   
+   private void imprimirEstadisticas(Resumen resumen) {
+       System.out.println("Nombre del Trabajo: " + resumen.getTitulo());
+       System.out.println("Autores: " + resumen.getAutores().recorrer());
+       String cuerpo = resumen.getCuerpo();
+       Lista palabrasClave = resumen.getPalabrasClave();
+       int[] frecuencias = contarFrecuencias(cuerpo, palabrasClave);
+       
+       String [] palabras = palabrasClave.toArray();
+       for (int i = 0; i < palabras.length; i++) {
+           System.out.println(palabras[i] + ": " + frecuencias[i]);
+       }
+       
+   }
+   
+   private int[] contarFrecuencias(String texto, Lista palabrasClave) {
+       String[] palabrasTexto = texto.split("\\W+");
+       String[] palabras = palabrasClave.toArray();
+       int[] frecuencias = new int [palabras.length];
+       
+       for(int i = 0; i < palabras.length; i++) {
+           frecuencias[i] = 0;
+           for (String palabraTexto : palabrasTexto) {
+                if (palabraTexto.equalsIgnoreCase(palabras[i])){
+           frecuencias[i]++;
+       }
+      }
+     }
+       return frecuencias;
+   }
+    
+   /**
+    * Funcion para obtener el resumen
+    * @return resumen
+    */
     public Resumen getResumen() {
         return resumen;
     }
-
+    /**
+     * Funcion para asignar el resumen 
+     * @param resumen 
+     */
     public void setResumen(Resumen resumen) {
         this.resumen = resumen;
+    }
+
+    /**
+     * @return the hashTitulos
+     */
+    public static Hashtable getHashTitulos() {
+        return hashTitulos;
+    }
+
+    /**
+     * @param aHashTitulos the hashTitulos to set
+     */
+    public static void setHashTitulos(Hashtable aHashTitulos) {
+        hashTitulos = aHashTitulos;
+    }
+
+    /**
+     * @return the hashPalabrasClave
+     */
+    public static Hashtable getHashPalabrasClave() {
+        return hashPalabrasClave;
+    }
+
+    /**
+     * @param aHashPalabrasClave the hashPalabrasClave to set
+     */
+    public static void setHashPalabrasClave(Hashtable aHashPalabrasClave) {
+        hashPalabrasClave = aHashPalabrasClave;
+    }
+
+    /**
+     * @return the hashAutores
+     */
+    public static Hashtable getHashAutores() {
+        return hashAutores;
+    }
+
+    /**
+     * @param aHashAutores the hashAutores to set
+     */
+    public static void setHashAutores(Hashtable aHashAutores) {
+        hashAutores = aHashAutores;
     }
     
 
