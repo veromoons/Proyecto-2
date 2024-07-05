@@ -3,7 +3,7 @@ package Clases;
 
 /**
  *Clase en donde se desarrolla la creacion de la hashtable, sus metodos (insertar, buscar y eliminar) y la funcion hash (necesaria para lo anterior)
- * @author veronicaluna
+ * @author veronicaluna, ruthsenior
  */
 public class Hashtable {
     
@@ -45,6 +45,7 @@ public class Hashtable {
     
     public ListaResumen buscarPorTitulo(String tituloBuscado){ //retorna lista vacia si no hay resumenes con el titulo buscado
         int indice = funcionHash(tituloBuscado);
+
         NodoResumen pAux= null;  
         ListaResumen resumConIgualTituloEncontr= new ListaResumen();
         

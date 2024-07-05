@@ -4,11 +4,15 @@
  */
 package Interfaces;
 
+import Info.LeerTxt;
+
 /**
  *
- * @author berna
+ * @author berna, ruthsenior
  */
 public class Ventana2 extends javax.swing.JFrame {
+
+    private final LeerTxt leerTxt;
 
     /**
      * Creates new form Ventana2
@@ -16,6 +20,7 @@ public class Ventana2 extends javax.swing.JFrame {
     public Ventana2() {
         initComponents();
         this.setLocationRelativeTo(this);
+        leerTxt = new LeerTxt();
     }
 
     /**
@@ -80,6 +85,8 @@ public class Ventana2 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+       
+//        leerTxt.analizarResumen();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buscarPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPalabraActionPerformed
