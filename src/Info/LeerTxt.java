@@ -80,6 +80,7 @@ public class LeerTxt {
                     if (!line.trim().equalsIgnoreCase("autores") && !line.trim().isEmpty()) {
                         autores.preinsertarPrimero(line.trim());  //preinsertarprimero
                     }
+                    //System.out.println(line);
                     line = br.readLine();
                 }
 
@@ -115,6 +116,7 @@ public class LeerTxt {
              this.cuerpos.insertarUltimo(cuerpo.toString());
                 //System.out.println(this.cuerpos.recorrer());
                 Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
+                System.out.println(resumen.mostrarResumen());
                 this.setResumen(resumen);
                 this.cargarResumentxt(resumen);
                 guardado = true;
@@ -263,7 +265,7 @@ public class LeerTxt {
             String[] resumenes = texto.toString().split("%");
             
             for (int i = 0; i < resumenes.length; i++) {
-                System.out.println("resumen" + i + ":  "+ resumenes[i]);
+                //System.out.println("resumen" + i + ":  "+ resumenes[i]);
             String cuerpo = "";
             
             //Separar cada resumen por salto de linea
