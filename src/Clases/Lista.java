@@ -3,7 +3,11 @@ package Clases;
 
 /**
  * Clase para implementar primitivas de una lista simplemente enlazada
+<<<<<<< HEAD
+ * @author veronicaluna, ruthsenior
+=======
  * @author veronicaluna
+>>>>>>> 1054f4d0b1c5371602479bc670408fda0429a87f
  */
 
 public class Lista {
@@ -134,6 +138,19 @@ public class Lista {
      */
     public void setiN(int iN) {
         this.iN = iN;
+    }
+
+    public String[] toArray() {
+        String [] array = new String[iN];
+        Nodo temp = first;
+        int i = 0;
+        while(temp != null) {
+            array[i] = temp.getInfo();
+            temp = temp.getNext();
+            i++;
+        }
+        return array;
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
  
 }

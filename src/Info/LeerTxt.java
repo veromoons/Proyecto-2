@@ -15,10 +15,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
+import Clases.NodoResumen;
 
 /**
  * Clase para guardar y cargar informacion con documentos de texto en el programa
- * @author sofiagrateron
+
  */
 public class LeerTxt {
     public static Hashtable hashTitulos;
@@ -79,7 +80,7 @@ public class LeerTxt {
                     if (!line.trim().equalsIgnoreCase("autores") && !line.trim().isEmpty()) {
                         autores.preinsertarPrimero(line.trim());  //preinsertarprimero
                     }
-                    System.out.println(line);
+                    //System.out.println(line);
                     line = br.readLine();
                 }
 
@@ -287,6 +288,7 @@ public class LeerTxt {
             e.printStackTrace();
         }
            
+
    
    }
         
