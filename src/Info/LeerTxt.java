@@ -128,7 +128,6 @@ public class LeerTxt {
     }
     return guardado;
 }
-
     /**
      * Funcion para cargar la informacion del resumen escogido por el usuario en el TXT de todos los resumenes guardados en el programa
      * @param resumen 
