@@ -10,6 +10,10 @@ import Clases.ListaResumen;
 import Clases.Main;
 import Info.LeerTxt;
 import javax.swing.JOptionPane;
+import Clases.NodoResumen;
+import javax.swing.DefaultListModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -20,10 +24,12 @@ public class Ventana3 extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPrueba
      */
+    public static Ventana2 v22;
     public Ventana3() {
         initComponents();
         this.setLocationRelativeTo(this);
         palabraABuscar.setText("");
+         this.v22 = new Ventana2();
     }
 
     /**
@@ -40,12 +46,17 @@ public class Ventana3 extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaResumenes = new javax.swing.JList<>();
         palabraABuscar = new javax.swing.JTextField();
+        atras = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        botonBuscar.setText("Buscar");
+        botonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton buscar.png"))); // NOI18N
+        botonBuscar.setBorder(null);
         botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarActionPerformed(evt);
@@ -53,42 +64,107 @@ public class Ventana3 extends javax.swing.JFrame {
         });
         jPanel1.add(botonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, -1, -1));
 
-        listaResumenes.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        listaResumenes.setBackground(new java.awt.Color(255, 255, 255));
+        listaResumenes.setFont(new java.awt.Font("Eras Demi ITC", 0, 12)); // NOI18N
+        listaResumenes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaResumenes.setSelectionBackground(new java.awt.Color(255, 204, 204));
         jScrollPane2.setViewportView(listaResumenes);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 390, 210));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 390, 210));
+
+        palabraABuscar.setBackground(new java.awt.Color(255, 255, 255));
+        palabraABuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(palabraABuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 270, 30));
+
+        atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton atras.png"))); // NOI18N
+        atras.setBorder(null);
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 60, 30));
+
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton salir.png"))); // NOI18N
+        exit.setBorder(null);
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 30, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 360));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        
+        LeerTxt txt = Main.txt;   
+        //System.out.println("encontre: "+ txt.getHashTitulos().buscarPorTitulo("Arquitectura referencial para mecanismos de Internacionalización y localización en PHP.").recorrerResumenes());
 
-        ListaResumen resumenesEncontrados=Main.txt.hashPalabrasClave.buscarPorPalabraClave(palabraABuscar.getText().trim());
-        if (resumenesEncontrados != null && resumenesEncontrados.getiN()>0){
-            System.out.println(resumenesEncontrados.recorrerResumenes());
-        }
+        ListaResumen resumenesEncontrados=txt.getHashPalabrasClave().buscarPorPalabraClave(palabraABuscar.getText().trim());
+        listaResumenes.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) { // Detecta un solo clic
+                        int index = listaResumenes.locationToIndex(e.getPoint());
+                        if (index >= 0) {
+                            int contador = 0;
+                            NodoResumen aux = resumenesEncontrados.getFirst();
+                            while (contador !=index & aux !=null){
+                                aux=aux.getNext();
+                                contador++;
+                            } 
+                            String stringResumen= aux.getInfo().getTitulo() + "\n\n" + aux.getInfo().getAutores().recorrer() +"\n\n"+aux.getInfo().getCuerpo()+"\n\nPalabras clave: "+aux.getInfo().getPalabrasClave().recorrer() +"\n";
+                            VentanaResumen1 vr1 = new VentanaResumen1(stringResumen);
+                            vr1.setVisible(true);
+                            //JOptionPane.showMessageDialog(null, "Cuerpo: " + aux.getInfo().getCuerpo());
+//                            JOptionPane.showMessageDialog(null, "Índice seleccionado: " + index);
+                        }
+                    }
+                }
+            });
+            if (resumenesEncontrados != null && resumenesEncontrados.getiN()>0){
+                DefaultListModel<String> listModel = new DefaultListModel<>();
+                NodoResumen nodoActual = resumenesEncontrados.getFirst();
+                while (nodoActual != null) {
+                    listModel.addElement(nodoActual.getInfo().getTitulo());
+                    nodoActual = nodoActual.getNext();
+                }
+                listaResumenes.setModel(listModel);
+            }
         else {
             JOptionPane.showMessageDialog(null,"No hay resumenes guardados con esta palabra clave.");
             palabraABuscar.setText("");
         }
         
     }//GEN-LAST:event_botonBuscarActionPerformed
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        v22.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_atrasActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,7 +205,10 @@ public class Ventana3 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
     private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton exit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> listaResumenes;

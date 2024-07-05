@@ -7,6 +7,10 @@ package Interfaces;
 
 import Clases.ListaResumen;
 import Clases.Main;
+import Clases.NodoResumen;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,10 +22,13 @@ public class Ventana4 extends javax.swing.JFrame {
     /**
      * Creates new form Ventana4
      */
+    
+    public static Ventana2 v22;
     public Ventana4() {
         initComponents();
         this.setLocationRelativeTo(this);
         autorABuscar.setText("");
+        this.v22 = new Ventana2();
     }
 
     /**
@@ -37,39 +44,69 @@ public class Ventana4 extends javax.swing.JFrame {
         buscarPorAutor = new javax.swing.JButton();
         autorABuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaResumenesAutor = new javax.swing.JList<>();
+        atras = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buscarPorAutor.setText("Buscar");
+        buscarPorAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton buscar.png"))); // NOI18N
+        buscarPorAutor.setBorder(null);
         buscarPorAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarPorAutorActionPerformed(evt);
             }
         });
         jPanel1.add(buscarPorAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, -1, -1));
+
+        autorABuscar.setBackground(new java.awt.Color(255, 255, 255));
+        autorABuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(autorABuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 270, 30));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 390, 210));
+        listaResumenesAutor.setBackground(new java.awt.Color(255, 255, 255));
+        listaResumenesAutor.setFont(new java.awt.Font("Eras Demi ITC", 0, 12)); // NOI18N
+        listaResumenesAutor.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaResumenesAutor.setSelectionBackground(new java.awt.Color(255, 204, 204));
+        jScrollPane1.setViewportView(listaResumenesAutor);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 390, 210));
+
+        atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton atras.png"))); // NOI18N
+        atras.setBorder(null);
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton salir.png"))); // NOI18N
+        exit.setBorder(null);
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 30, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -77,7 +114,37 @@ public class Ventana4 extends javax.swing.JFrame {
 
     private void buscarPorAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorAutorActionPerformed
         ListaResumen resumenesEncontrados=Main.txt.hashAutores.buscarPorAutor(autorABuscar.getText().trim());
+        listaResumenesAutor.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) { // Detecta un solo clic
+                        int index = listaResumenesAutor.locationToIndex(e.getPoint());
+                        if (index >= 0) {
+                            int contador = 0;
+                            NodoResumen aux = resumenesEncontrados.getFirst();
+                            while (contador !=index & aux !=null){
+                                aux=aux.getNext();
+                                contador++;
+                            }
+                            String stringResumen= aux.getInfo().getTitulo() + "\n\n" + aux.getInfo().getAutores().recorrer() +"\n\n"+aux.getInfo().getCuerpo()+"\n\nPalabras clave: "+aux.getInfo().getPalabrasClave().recorrer()+"\n";
+                            VentanaResumen2 vr2 = new VentanaResumen2(stringResumen);
+                            vr2.setVisible(true);
+                            //JOptionPane.showMessageDialog(null, "Cuerpo: " + aux.getInfo().getCuerpo());
+//                            JOptionPane.showMessageDialog(null, "Índice seleccionado: " + index);
+                        }
+                    }
+                }
+            });
+        
         if (resumenesEncontrados != null && resumenesEncontrados.getiN()>0){
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+                NodoResumen nodoActual = resumenesEncontrados.getFirst();
+                while (nodoActual != null) {
+                    listModel.addElement(nodoActual.getInfo().getTitulo());
+                    nodoActual = nodoActual.getNext();
+                }
+                listaResumenesAutor.setModel(listModel);
+            
             System.out.println(resumenesEncontrados.recorrerResumenes());
         }
         else {
@@ -85,6 +152,16 @@ public class Ventana4 extends javax.swing.JFrame {
             autorABuscar.setText("");
         }
     }//GEN-LAST:event_buscarPorAutorActionPerformed
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        v22.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_atrasActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,10 +199,13 @@ public class Ventana4 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
     private javax.swing.JTextField autorABuscar;
     private javax.swing.JButton buscarPorAutor;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JButton exit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> listaResumenesAutor;
     // End of variables declaration//GEN-END:variables
 }

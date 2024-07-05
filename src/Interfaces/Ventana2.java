@@ -4,18 +4,27 @@
  */
 package Interfaces;
 
+import Info.LeerTxt;
+
+import Clases.Main;
+import javax.swing.JOptionPane;
 /**
  *
- * @author berna
+ * @author berna, ruthsenior
  */
 public class Ventana2 extends javax.swing.JFrame {
+
+    private final LeerTxt leerTxt;
 
     /**
      * Creates new form Ventana2
      */
+    public static Ventana1 v11;
     public Ventana2() {
         initComponents();
         this.setLocationRelativeTo(this);
+        leerTxt = Main.txt;
+        this.v11=new Ventana1();
     }
 
     /**
@@ -31,48 +40,72 @@ public class Ventana2 extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         buscarAutor = new javax.swing.JButton();
         buscarPalabra = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        salirSistema = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Analizar resumen");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 1 v2.png"))); // NOI18N
+        jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 140, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 240, -1));
 
-        buscarAutor.setText("Buscar resumen por autor");
+        buscarAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 3 v2.png"))); // NOI18N
+        buscarAutor.setBorder(null);
         buscarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarAutorActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
+        jPanel1.add(buscarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
 
-        buscarPalabra.setText("Buscar resumen por palabra clave");
+        buscarPalabra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 2 v2.png"))); // NOI18N
+        buscarPalabra.setBorder(null);
         buscarPalabra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarPalabraActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarPalabra, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, -1, -1));
+        jPanel1.add(buscarPalabra, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 240, -1));
 
-        jButton4.setText("Salir del sistema");
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
+        salirSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 4 v2.png"))); // NOI18N
+        salirSistema.setBorder(null);
+        salirSistema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirSistemaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(salirSistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
+
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton salir.png"))); // NOI18N
+        exit.setBorder(null);
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 30, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v2.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-150, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -80,9 +113,14 @@ public class Ventana2 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+       
+//        leerTxt.analizarResumen();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buscarPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPalabraActionPerformed
+        LeerTxt txt = Main.txt;   
+        System.out.println("encontre: "+ txt.getHashTitulos().buscarPorTitulo("Arquitectura referencial para mecanismos de Internacionalización y localización en PHP.").recorrerResumenes());
+
         Ventana3 v3prueba=new Ventana3();
         v3prueba.setVisible(true);
         this.setVisible(false);
@@ -93,6 +131,16 @@ public class Ventana2 extends javax.swing.JFrame {
         v4.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_buscarAutorActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void salirSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirSistemaActionPerformed
+        JOptionPane.showMessageDialog(null, "Gracias por preferirnos. Contamos con tu próxima visita. ¡Hasta pronto!");
+        this.setVisible(false);
+        v11.setVisible(true); //NO SE si mosttrarla o q desaparezca todo y ya al salir del sistema
+    }//GEN-LAST:event_salirSistemaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,8 +180,10 @@ public class Ventana2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarAutor;
     private javax.swing.JButton buscarPalabra;
+    private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton salirSistema;
     // End of variables declaration//GEN-END:variables
 }

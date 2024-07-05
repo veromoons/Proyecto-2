@@ -3,7 +3,7 @@ package Clases;
 
 /**
  *Clase en donde se desarrolla la creacion de la hashtable, sus metodos (insertar, buscar y eliminar) y la funcion hash (necesaria para lo anterior)
- * @author veronicaluna
+ * @author veronicaluna, ruthsenior
  */
 public class Hashtable {
     
@@ -45,13 +45,14 @@ public class Hashtable {
     
     public ListaResumen buscarPorTitulo(String tituloBuscado){ //retorna lista vacia si no hay resumenes con el titulo buscado
         int indice = funcionHash(tituloBuscado);
+
         NodoResumen pAux= null;  
         ListaResumen resumConIgualTituloEncontr= new ListaResumen();
         
         if (ArrayHash[indice]!=null){
             pAux = ArrayHash[indice];
             while (pAux!=null){
-                if (pAux.getInfo().getTitulo()==tituloBuscado){
+                if (pAux.getInfo().getTitulo().equals(tituloBuscado)){
                     resumConIgualTituloEncontr.preinsertarPrimero(pAux.getInfo());
                 }
                 pAux=pAux.getNext();
@@ -68,6 +69,7 @@ public class Hashtable {
     
     public void insertarPorPalabraClave(Resumen resumen){
         Nodo pAux= resumen.getPalabrasClave().getFirst();
+        System.out.println(pAux.getInfo());
         while (pAux!=null){
             int indice = funcionHash(pAux.getInfo());
             NodoResumen nodoNuevo = new NodoResumen(resumen);

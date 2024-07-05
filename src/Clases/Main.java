@@ -9,6 +9,7 @@ import Info.LeerTxt;
 import Interfaces.Ventana1;
 import Interfaces.Ventana3;
 
+
 /**
  *
  * @author veronicaluna
@@ -18,7 +19,7 @@ public class Main {
     public static LeerTxt txt = new LeerTxt();
     
     public static void main(String[] args) {
-        Ventana1 v1 = new Ventana1();
+         Ventana1 v1 = new Ventana1();
         v1.setVisible(true);
         
         
