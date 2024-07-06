@@ -314,6 +314,118 @@ public class LeerTxt {
        }
        return repetido;
    }
+   
+   public void analizarResumen() {
+       String[] titulos = obtenerTitulos();
+       ordenarTitulos(titulos);
+       
+       System.out.println("Resúmenes guardados:");
+       for (int i=0; i< titulos.length; i++) {
+           System.out.println((1+i) + ". " + titulos[i]);
+       }
+       
+       int seleccion = obtenerSeleccion(titulos.length);
+       if (seleccion == -1) {
+           System.out.println("Operación cancelada");
+           return;
+       }
+       String tituloSeleccionado = titulos[seleccion -1];
+       Resumen resumenSeleccionado = obtenerResumen(tituloSeleccionado);
+       if (resumenSeleccionado != null) {
+           imprimirEstadisticas(resumenSeleccionado);
+           
+       } else {
+           System.out.println("No se ha encontrado el resumen");
+       }
+   }
+   
+   private String[] obtenerTitulos() {
+       Lista titulosLista = new Lista();
+       for (int i = 0; i < hashTitulos.getSize(); i++) {
+           NodoResumen nodo = hashTitulos.getNodo(i);
+           while (nodo != null) {
+               titulosLista.insertarUltimo(nodo.getInfo().getTitulo());
+               nodo = nodo.getNext();
+           }
+       }
+       return titulosLista.toArray();
+   }
+   
+   private void ordenarTitulos(String[] titulos) {
+       for (int i = 0; i< titulos.length -1; i++) {
+           for (int j = 0; j< titulos.length -i-1; j++) {
+               if (titulos[j].compareTo(titulos[j+1])>0) {
+                   String temp = titulos[j];
+                   titulos[j] = titulos[j+1];
+                   titulos[j+1] = temp;
+               }
+           }
+       }
+   }
+   
+   private int obtenerSeleccion(int max) {
+       int seleccion = -1;
+       do {
+           try {
+               String input = JOptionPane.showInputDialog("Seleccione el número del resumen que dessee analizar: ");
+               if (input == null) {
+                   return -1;
+               }
+               seleccion = Integer.parseInt(input);
+           } catch (NumberFormatException e) {
+               JOptionPane.showMessageDialog(null, "ERROR. Seleccione un número válido: ");
+           }
+       } while (seleccion < 1 || seleccion> max);
+       return seleccion;
+   }
+   
+   private Resumen obtenerResumen(String titulo) {
+       for (int i = 0; i< hashTitulos.getSize(); i++) {
+           NodoResumen nodo = hashTitulos.getNodo(i);
+           while (nodo != null) {
+               if (nodo.getInfo().getTitulo().equalsIgnoreCase(titulo)) {
+                   return nodo.getInfo();
+               }
+               nodo = nodo.getNext();
+           }
+       }
+       return null;
+   }
+   
+   private void imprimirEstadisticas(Resumen resumen) {
+       System.out.println("Nombre del Trabajo: " + resumen.getTitulo());
+       System.out.println("Autores: " + resumen.getAutores().recorrer());
+       String cuerpo = resumen.getCuerpo();
+       Lista palabrasClave = resumen.getPalabrasClave();
+       int [] frecuencias = contarFrecuencias(cuerpo, palabrasClave);
+       
+       String[] palabras = palabrasClave.toArray();
+       for (int i = 0; i< palabras.length; i++) {
+           System.out.println(palabras[i] + ": " + frecuencias[i]);
+       }
+   }
+   
+   private int [] contarFrecuencias(String texto, Lista palabrasClave) {
+       String[] palabrasTexto = texto.split("\\W+");
+       String[] palabras = palabrasClave.toArray();
+       int [] frecuencias = new int[palabras.length];
+       
+       for (int i = 0; i< palabras.length; i++) {
+           frecuencias [i] = 0;
+           for (String palabraTexto: palabrasTexto) {
+               if (palabraTexto.equalsIgnoreCase(palabras[i])) {
+               frecuencias[i] ++;    
+           }
+          
+         }
+       }
+       return frecuencias;
+   }
+   
+   
+   
+   
+   
 
     
     
