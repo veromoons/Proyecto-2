@@ -88,21 +88,16 @@ public class VentanaMostrarAnalisis extends javax.swing.JFrame {
     }//GEN-LAST:event_atrasActionPerformed
 
     
-    public static ListaInt countKeywords(String text, Lista keywords) {
-        ListaInt keywordCounts = new ListaInt();
-        
-        // Normalizar el texto a una forma sin acentos y en minúsculas
-        String normalizedText = normalize(text);
-
-        // Contar cada palabra clave
-//        String[] words = normalizedText.split("\\s+");
-        for(int i=0; i<keywords.getiN(); i++){
-            String normalizedKeyword = normalize(keywords.getPosicion(i).getInfo());
-            int count = countOccurrences(normalizedText, normalizedKeyword);
-            keywordCounts.preinsertarPrimero(count);  
+    public static ListaInt contarPalabrasClave(String text, Lista palabrasClave) {
+        ListaInt cuentasPalabraClave = new ListaInt();
+        String textoNorm = normalize(text);
+        for(int i=0; i<palabrasClave.getiN(); i++){
+            String palabraClaveNorm = normalize(palabrasClave.getPosicion(i).getInfo());
+            int cuenta = contarOcurrencias(textoNorm, palabraClaveNorm);
+            cuentasPalabraClave.preinsertarPrimero(cuenta);  
         }
 
-        return keywordCounts;
+        return cuentasPalabraClave;
     }
 
     private static String normalize(String input) {
@@ -112,7 +107,7 @@ public class VentanaMostrarAnalisis extends javax.swing.JFrame {
         return normalized.toLowerCase();
     }
 
-    private static int countOccurrences(String text, String keyword) {
+    private static int contarOcurrencias(String text, String keyword) {
         int count = 0;
         int index = 0;
         while ((index = text.indexOf(keyword, index)) != -1) {
@@ -126,7 +121,7 @@ public class VentanaMostrarAnalisis extends javax.swing.JFrame {
         String text = this.resumen.getCuerpo();
         Lista keywords = this.resumen.getPalabrasClave();
 
-        ListaInt result = countKeywords(text, keywords);
+        ListaInt result = contarPalabrasClave(text, keywords);
         String analisis= this.resumen.getTitulo() +"\n\n"+this.resumen.getAutores().recorrer()+"\n\n";
 
         for (int i = 0; i < keywords.getiN(); i++) {
