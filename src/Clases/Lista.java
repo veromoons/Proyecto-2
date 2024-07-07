@@ -3,11 +3,8 @@ package Clases;
 
 /**
  * Clase para implementar primitivas de una lista simplemente enlazada
-<<<<<<< HEAD
  * @author veronicaluna, ruthsenior
-=======
  * @author veronicaluna
->>>>>>> 1054f4d0b1c5371602479bc670408fda0429a87f
  */
 
 public class Lista {

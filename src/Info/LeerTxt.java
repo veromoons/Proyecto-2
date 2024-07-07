@@ -138,7 +138,7 @@ public class LeerTxt {
 
             if (!this.revisarRepetido(cuerpo.toString())){
              this.cuerpos.insertarUltimo(cuerpo.toString());
-                System.out.println(autores.recorrer());
+//                System.out.println(autores.recorrer());
                 Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
                 //System.out.println(resumen.mostrarResumen());
                 this.setResumen(resumen);
@@ -321,7 +321,7 @@ public class LeerTxt {
         } 
             
             }catch (FileNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
            
 

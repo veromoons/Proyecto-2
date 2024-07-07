@@ -140,8 +140,7 @@ public class Ventana2 extends javax.swing.JFrame {
 
     private void salirSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirSistemaActionPerformed
         JOptionPane.showMessageDialog(null, "Gracias por preferirnos. Contamos con tu próxima visita. ¡Hasta pronto!");
-        this.setVisible(false);
-        v11.setVisible(true); //NO SE si mosttrarla o q desaparezca todo y ya al salir del sistema
+        System.exit(0);
     }//GEN-LAST:event_salirSistemaActionPerformed
 
     /**
