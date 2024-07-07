@@ -24,12 +24,43 @@ public class Ventana3 extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPrueba
      */
+    
+    private void inicializarJList() {
+        listaResumenes.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) { // Detecta un solo clic
+                    int index = listaResumenes.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        ListaResumen resumenesEncontrados = Main.txt.hashPalabrasClave.buscarPorAutor(palabraABuscar.getText().trim());
+                        int contador = 0;
+                        NodoResumen aux = resumenesEncontrados.getFirst();
+                        while (contador != index && aux != null) {
+                            aux = aux.getNext();
+                            contador++;
+                        }
+                        if (aux != null) {
+                            String stringResumen = aux.getInfo().getTitulo() + "\n\n" +
+                                                  aux.getInfo().getAutores().recorrer() + "\n\n" +
+                                                  aux.getInfo().getCuerpo() + "\n\nPalabras clave: " +
+                                                  aux.getInfo().getPalabrasClave().recorrer() + "\n";
+                            VentanaResumen1 vr1 = new VentanaResumen1(stringResumen);
+                            vr1.setVisible(true);
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
     public static Ventana2 v22;
     public Ventana3() {
         initComponents();
         this.setLocationRelativeTo(this);
         palabraABuscar.setText("");
-         this.v22 = new Ventana2();
+        this.v22 = new Ventana2();
+        inicializarJList();
+
     }
 
     /**
@@ -120,38 +151,18 @@ public class Ventana3 extends javax.swing.JFrame {
         //System.out.println("encontre: "+ txt.getHashTitulos().buscarPorTitulo("Arquitectura referencial para mecanismos de Internacionalización y localización en PHP.").recorrerResumenes());
 
         ListaResumen resumenesEncontrados=txt.getHashPalabrasClave().buscarPorPalabraClave(palabraABuscar.getText().trim());
-        listaResumenes.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 1) { // Detecta un solo clic
-                        int index = listaResumenes.locationToIndex(e.getPoint());
-                        if (index >= 0) {
-                            int contador = 0;
-                            NodoResumen aux = resumenesEncontrados.getFirst();
-                            while (contador !=index & aux !=null){
-                                aux=aux.getNext();
-                                contador++;
-                            } 
-                            String stringResumen= aux.getInfo().getTitulo() + "\n\n" + aux.getInfo().getAutores().recorrer() +"\n\n"+aux.getInfo().getCuerpo()+"\n\nPalabras clave: "+aux.getInfo().getPalabrasClave().recorrer() +"\n";
-                            VentanaResumen1 vr1 = new VentanaResumen1(stringResumen);
-                            vr1.setVisible(true);
-                            //JOptionPane.showMessageDialog(null, "Cuerpo: " + aux.getInfo().getCuerpo());
-//                            JOptionPane.showMessageDialog(null, "Índice seleccionado: " + index);
-                        }
-                    }
-                }
-            });
-            if (resumenesEncontrados != null && resumenesEncontrados.getiN()>0){
-                DefaultListModel<String> listModel = new DefaultListModel<>();
-                NodoResumen nodoActual = resumenesEncontrados.getFirst();
-                while (nodoActual != null) {
-                    listModel.addElement(nodoActual.getInfo().getTitulo());
-                    nodoActual = nodoActual.getNext();
-                }
-                listaResumenes.setModel(listModel);
+        if (resumenesEncontrados != null && resumenesEncontrados.getiN() > 0) {
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            NodoResumen nodoActual = resumenesEncontrados.getFirst();
+            while (nodoActual != null) {
+                listModel.addElement(nodoActual.getInfo().getTitulo());
+                nodoActual = nodoActual.getNext();
             }
-        else {
-            JOptionPane.showMessageDialog(null,"No hay resumenes guardados con esta palabra clave.");
+            listaResumenes.setModel(listModel);
+        } else {
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            listaResumenes.setModel(listModel);
+            JOptionPane.showMessageDialog(null, "No hay resúmenes guardados con este autor.");
             palabraABuscar.setText("");
         }
         

@@ -60,6 +60,16 @@ public class Lista {
         return aux;
     }
     
+    public Nodo getPosicion(int i){
+        int contador =0;
+        Nodo pAux = first;
+        while (contador !=i){
+            pAux=pAux.getNext();
+            contador++;
+        }
+        return pAux;
+    }
+    
     /**
      * Metodo para insertar al final de la lista
      * @param palabra a insertar

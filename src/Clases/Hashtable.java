@@ -69,7 +69,7 @@ public class Hashtable {
     
     public void insertarPorPalabraClave(Resumen resumen){
         Nodo pAux= resumen.getPalabrasClave().getFirst();
-        System.out.println(pAux.getInfo());
+        //System.out.println(pAux.getInfo());
         while (pAux!=null){
             int indice = funcionHash(pAux.getInfo());
             NodoResumen nodoNuevo = new NodoResumen(resumen);
