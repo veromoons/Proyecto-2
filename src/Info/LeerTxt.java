@@ -7,6 +7,7 @@ package Info;
 import Clases.Hashtable;
 import Clases.Lista;
 import Clases.Resumen;
+import Clases.ListaResumen;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,6 +28,7 @@ public class LeerTxt {
     public static Hashtable hashAutores;
     private Resumen resumen;
     private Lista cuerpos;
+    public static ListaResumen listaDeResumenes;
 
     
     public LeerTxt() {
@@ -35,12 +37,13 @@ public class LeerTxt {
         this.hashAutores = new Hashtable(10000);
         this.resumen = null;
         this.cuerpos = new Lista();
+        this.listaDeResumenes=new ListaResumen();
     }
 
 
-    public String findNextNotEmpty(BufferedReader br) throws IOException {
-        String line = br.readLine();
-        while (br.readLine().length() ==0 ){
+    public String findNextNotEmpty(String lineInput, BufferedReader br) throws IOException {
+        String line=lineInput;
+        while (line.length() ==0 ){
             line = br.readLine();
         }
         return line;
@@ -60,25 +63,45 @@ public class LeerTxt {
     StringBuilder palabras = new StringBuilder();
     Lista autores = new Lista();
     Lista palabrasClave = new Lista();
+    
+    
 
     if (abre != null) {
         try (FileReader fr = new FileReader(abre);
+                
              BufferedReader br = new BufferedReader(fr)) {
-
-            if ((line = br.readLine()) != null ) {
+            
+            line = br.readLine();
+                
+            //AQUI SI LO CONSIGUE
+//                while (line != null){
+//                                System.out.println("linea: "+ line);
+//                                line = br.readLine();
+//                }
+            if (line != null ) {
                 if (line.length()==0){
                     
-                    line = findNextNotEmpty(br);
+                    line = findNextNotEmpty(line, br);
                 }
                 titulo = line.trim();
                 
-                line = findNextNotEmpty(br);
+//                while (line != null){
+//                                System.out.println("linea: "+ line);
+                                line = br.readLine();
+//                }
+                line = findNextNotEmpty(line, br); //el problema si es aqui omg
                 
 
                 // Leer autores
+                //AQUI YA NO LO CONSIGUE
+//                while (line != null){
+//                                System.out.println("linea: "+ line);
+//                                line = br.readLine();
+//                }
+//venezuela jugo con mis sentimientos
                 while (line != null && !line.trim().equalsIgnoreCase("resumen")) {
-                    System.out.println(line);
-                    if (!line.trim().equalsIgnoreCase("autores") && !line.trim().isEmpty()) {
+//                    System.out.println(line);
+                    if (!line.trim().equalsIgnoreCase("Autores") && !line.trim().isEmpty()) {
                         autores.preinsertarPrimero(line.trim());  //preinsertarprimero
                     }
                     //System.out.println(line);
@@ -115,9 +138,9 @@ public class LeerTxt {
 
             if (!this.revisarRepetido(cuerpo.toString())){
              this.cuerpos.insertarUltimo(cuerpo.toString());
-                //System.out.println(this.cuerpos.recorrer());
+//                System.out.println(autores.recorrer());
                 Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
-                System.out.println(resumen.mostrarResumen());
+                //System.out.println(resumen.mostrarResumen());
                 this.setResumen(resumen);
                 this.cargarResumentxt(resumen);
                 guardado = true;
@@ -210,7 +233,7 @@ public class LeerTxt {
                 if (resumenSeparado[j].trim().equals("AUTORES")) {
                     String [] autoresSeparados = resumenSeparado[j+1].split(",");
                         for (int k = 0; k < autoresSeparados.length; k++) {
-                            System.out.println(autoresSeparados[k].trim());
+                            //System.out.println(autoresSeparados[k].trim());
                             autores.preinsertarPrimero(autoresSeparados[k].trim());
                     }
                         }
@@ -234,20 +257,21 @@ public class LeerTxt {
 //                    System.out.println(titulo.equals( "GraphQL vs REST: una comparación desde la perspectiva de eficiencia de desempeño."));
                     Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
                     //System.out.println("resumen" + i+ ":"+ resumenObj.mostrarResumen());
+                    
+                    //this.listaDeResumenes.preinsertarPrimero(resumen);
+                    this.listaDeResumenes.insertarAlfabetico(resumenObj);
                     this.getHashTitulos().insertarPorTitulo(resumenObj);
                     //System.out.println(resumenObj.getPalabrasClave().recorrer());
                     this.getHashPalabrasClave().insertarPorPalabraClave(resumenObj);
                     this.getHashAutores().insertarPorAutor(resumenObj);
                     count++;
                     
-//                    System.out.println("sexo");
-                    
-        //System.out.println("encontre: "+ this.getHashTitulos().buscarPorTitulo("Arquitectura referencial para mecanismos de Internacionalización y localización en PHP.").recorrerResumenes());
-                
                 }
                
                 
                 }
+                //System.out.println(this.listaDeResumenes.recorrerResumenes());
+
             }
                 
             
@@ -297,7 +321,7 @@ public class LeerTxt {
         } 
             
             }catch (FileNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
            
 
@@ -315,41 +339,41 @@ public class LeerTxt {
        return repetido;
    }
    
-   public void analizarResumen() {
-       String[] titulos = obtenerTitulos();
-       ordenarTitulos(titulos);
-       
-       System.out.println("Resúmenes guardados:");
-       for (int i=0; i< titulos.length; i++) {
-           System.out.println((1+i) + ". " + titulos[i]);
-       }
-       
-       int seleccion = obtenerSeleccion(titulos.length);
-       if (seleccion == -1) {
-           System.out.println("Operación cancelada");
-           return;
-       }
-       String tituloSeleccionado = titulos[seleccion -1];
-       Resumen resumenSeleccionado = obtenerResumen(tituloSeleccionado);
-       if (resumenSeleccionado != null) {
-           imprimirEstadisticas(resumenSeleccionado);
-           
-       } else {
-           System.out.println("No se ha encontrado el resumen");
-       }
-   }
-   
-   private String[] obtenerTitulos() {
-       Lista titulosLista = new Lista();
-       for (int i = 0; i < hashTitulos.getSize(); i++) {
-           NodoResumen nodo = hashTitulos.getNodo(i);
-           while (nodo != null) {
-               titulosLista.insertarUltimo(nodo.getInfo().getTitulo());
-               nodo = nodo.getNext();
-           }
-       }
-       return titulosLista.toArray();
-   }
+//   public void analizarResumen() {
+//       String[] titulos = obtenerTitulos();
+//       ordenarTitulos(titulos);
+//       
+//       System.out.println("Resúmenes guardados:");
+//       for (int i=0; i< titulos.length; i++) {
+//           System.out.println((1+i) + ". " + titulos[i]);
+//       }
+//       
+//       int seleccion = obtenerSeleccion(titulos.length);
+//       if (seleccion == -1) {
+//           System.out.println("Operación cancelada");
+//           return;
+//       }
+//       String tituloSeleccionado = titulos[seleccion -1];
+//       Resumen resumenSeleccionado = obtenerResumen(tituloSeleccionado);
+//       if (resumenSeleccionado != null) {
+//           imprimirEstadisticas(resumenSeleccionado);
+//           
+//       } else {
+//           System.out.println("No se ha encontrado el resumen");
+//       }
+//   }
+//   
+//   private String[] obtenerTitulos() {
+//       Lista titulosLista = new Lista();
+//       for (int i = 0; i < hashTitulos.getSize(); i++) {
+//           NodoResumen nodo = hashTitulos.getNodo(i);
+//           while (nodo != null) {
+//               titulosLista.insertarUltimo(nodo.getInfo().getTitulo());
+//               nodo = nodo.getNext();
+//           }
+//       }
+//       return titulosLista.toArray();
+//   }
    
    private void ordenarTitulos(String[] titulos) {
        for (int i = 0; i< titulos.length -1; i++) {
@@ -379,19 +403,19 @@ public class LeerTxt {
        return seleccion;
    }
    
-   private Resumen obtenerResumen(String titulo) {
-       for (int i = 0; i< hashTitulos.getSize(); i++) {
-           NodoResumen nodo = hashTitulos.getNodo(i);
-           while (nodo != null) {
-               if (nodo.getInfo().getTitulo().equalsIgnoreCase(titulo)) {
-                   return nodo.getInfo();
-               }
-               nodo = nodo.getNext();
-           }
-       }
-       return null;
-   }
-   
+//   private Resumen obtenerResumen(String titulo) {
+//       for (int i = 0; i< hashTitulos.getSize(); i++) {
+//           NodoResumen nodo = hashTitulos.getNodo(i);
+//           while (nodo != null) {
+//               if (nodo.getInfo().getTitulo().equalsIgnoreCase(titulo)) {
+//                   return nodo.getInfo();
+//               }
+//               nodo = nodo.getNext();
+//           }
+//       }
+//       return null;
+//   }
+//   
    private void imprimirEstadisticas(Resumen resumen) {
        System.out.println("Nombre del Trabajo: " + resumen.getTitulo());
        System.out.println("Autores: " + resumen.getAutores().recorrer());

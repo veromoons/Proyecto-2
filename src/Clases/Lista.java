@@ -5,7 +5,6 @@ package Clases;
  * Clase para implementar primitivas de una lista simplemente enlazada
 
  * @author veronicaluna, ruthsenior
-
  */
 
 public class Lista {
@@ -56,6 +55,16 @@ public class Lista {
                 aux=aux.getNext();
         }
         return aux;
+    }
+    
+    public Nodo getPosicion(int i){
+        int contador =0;
+        Nodo pAux = first;
+        while (contador !=i){
+            pAux=pAux.getNext();
+            contador++;
+        }
+        return pAux;
     }
     
     /**

@@ -19,7 +19,7 @@ public class VentanaResumen2 extends javax.swing.JFrame {
     public VentanaResumen2(String infoResumenElegido) {
         initComponents();
         this.resumen2=infoResumenElegido;
-        System.out.println(this.resumen2);
+//        System.out.println(this.resumen2);
         mostrarResumen();
         this.setLocationRelativeTo(this);
     }
@@ -80,6 +80,7 @@ public class VentanaResumen2 extends javax.swing.JFrame {
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_atrasActionPerformed
     
     public void mostrarResumen(){

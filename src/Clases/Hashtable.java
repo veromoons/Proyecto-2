@@ -69,7 +69,7 @@ public class Hashtable {
     
     public void insertarPorPalabraClave(Resumen resumen){
         Nodo pAux= resumen.getPalabrasClave().getFirst();
-        System.out.println(pAux.getInfo());
+        //System.out.println(pAux.getInfo());
         while (pAux!=null){
             int indice = funcionHash(pAux.getInfo());
             NodoResumen nodoNuevo = new NodoResumen(resumen);
@@ -119,13 +119,6 @@ public class Hashtable {
        return resumenesEncontrados;         
     }
 
-    public NodoResumen getNodo(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public int getSize() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
    
     

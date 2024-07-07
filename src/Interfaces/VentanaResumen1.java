@@ -18,7 +18,7 @@ public class VentanaResumen1 extends javax.swing.JFrame {
     public VentanaResumen1(String infoResumenElegido) {
         initComponents();
         this.resumen=infoResumenElegido;
-        System.out.println(this.resumen);
+//        System.out.println(this.resumen);
         mostrarResumen();
         this.setLocationRelativeTo(this);
     }

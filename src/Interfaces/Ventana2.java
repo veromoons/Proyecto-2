@@ -112,14 +112,16 @@ public class Ventana2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        VentanaAnalisis va = new VentanaAnalisis();
+        va.setVisible(true);
+        this.setVisible(false);
        
-        leerTxt.analizarResumen();
+//        leerTxt.analizarResumen();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buscarPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPalabraActionPerformed
         LeerTxt txt = Main.txt;   
-        System.out.println("encontre: "+ txt.getHashTitulos().buscarPorTitulo("Arquitectura referencial para mecanismos de Internacionalización y localización en PHP.").recorrerResumenes());
+        //System.out.println("encontre: "+ txt.getHashTitulos().buscarPorTitulo("Arquitectura referencial para mecanismos de Internacionalización y localización en PHP.").recorrerResumenes());
 
         Ventana3 v3prueba=new Ventana3();
         v3prueba.setVisible(true);
@@ -138,8 +140,7 @@ public class Ventana2 extends javax.swing.JFrame {
 
     private void salirSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirSistemaActionPerformed
         JOptionPane.showMessageDialog(null, "Gracias por preferirnos. Contamos con tu próxima visita. ¡Hasta pronto!");
-        this.setVisible(false);
-        v11.setVisible(true); //NO SE si mosttrarla o q desaparezca todo y ya al salir del sistema
+        System.exit(0);
     }//GEN-LAST:event_salirSistemaActionPerformed
 
     /**
