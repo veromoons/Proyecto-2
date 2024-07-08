@@ -58,7 +58,12 @@ public class ListaInt {
         }
         return aux;
     }
-    
+
+    /**
+     * 
+     * @param i
+     * @return 
+     */
     public NodoInt getPosicion(int i){
         int contador =0;
         NodoInt pAux = first;

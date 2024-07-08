@@ -6,7 +6,8 @@
 package Clases;
 
 /**
- *
+
+ * Clase nodo de tipo entero
  * @author verol
  */
 public class NodoInt {

@@ -71,6 +71,11 @@ public class ListaResumen {
         }
         iN++;   
     }
+
+    /**
+     * 
+     * @param resumen 
+     */
     public void insertarAlfabetico(Resumen resumen) {  
     NodoResumen nuevo = new NodoResumen(resumen); 
     if (first == null) {
@@ -109,11 +114,8 @@ public class ListaResumen {
         }
         else{
             NodoResumen temp = getFirst();
-            //int contador=0;
             while (temp != null){
                 imprimir += temp.getInfo().getInfoResumen() + "\n";
-                //contador++;
-                //System.out.println(contador);
                 temp = temp.getNext();
             }
         }

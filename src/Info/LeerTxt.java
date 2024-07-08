@@ -19,8 +19,8 @@ import javax.swing.JOptionPane;
 import Clases.NodoResumen;
 
 /**
- * Clase para guardar y cargar informacion con documentos de texto en el programa
-
+ * 
+ * @author sofiagrateron, ruthsenior
  */
 public class LeerTxt {
     public static Hashtable hashTitulos;
@@ -30,7 +30,7 @@ public class LeerTxt {
     private Lista cuerpos;
     public static ListaResumen listaDeResumenes;
 
-    
+    //Constructor
     public LeerTxt() {
         this.hashTitulos = new Hashtable(10000);
         this.hashPalabrasClave = new Hashtable(10000);
@@ -41,6 +41,13 @@ public class LeerTxt {
     }
 
 
+    /**
+     * Funcion que busca la siguiente linea no vacia en un txt
+     * @param lineInput
+     * @param br
+     * @return string, linea
+     * @throws IOException 
+     */
     public String findNextNotEmpty(String lineInput, BufferedReader br) throws IOException {
         String line=lineInput;
         while (line.length() ==0 ){
@@ -72,12 +79,7 @@ public class LeerTxt {
              BufferedReader br = new BufferedReader(fr)) {
             
             line = br.readLine();
-                
-            //AQUI SI LO CONSIGUE
-//                while (line != null){
-//                                System.out.println("linea: "+ line);
-//                                line = br.readLine();
-//                }
+
             if (line != null ) {
                 if (line.length()==0){
                     
@@ -85,47 +87,36 @@ public class LeerTxt {
                 }
                 titulo = line.trim();
                 
-//                while (line != null){
-//                                System.out.println("linea: "+ line);
-                                line = br.readLine();
-//                }
-                line = findNextNotEmpty(line, br); //el problema si es aqui omg
-                
 
-                // Leer autores
-                //AQUI YA NO LO CONSIGUE
-//                while (line != null){
-//                                System.out.println("linea: "+ line);
-//                                line = br.readLine();
-//                }
-//venezuela jugo con mis sentimientos
+
+                                line = br.readLine();
+
+                line = findNextNotEmpty(line, br); 
+                
                 while (line != null && !line.trim().equalsIgnoreCase("resumen")) {
-//                    System.out.println(line);
+
                     if (!line.trim().equalsIgnoreCase("Autores") && !line.trim().isEmpty()) {
                         autores.preinsertarPrimero(line.trim());  //preinsertarprimero
                     }
-                    //System.out.println(line);
+                    
                     line = br.readLine();
                 }
 
                 // Leer resumen
-                //System.out.println("line: "+line);
+                
                 while (line != null && !line.trim().isEmpty() && !line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves")) {
                     if (!line.trim().equalsIgnoreCase("resumen") && !line.trim().isEmpty()) {
                         cuerpo.append(line.trim()).append(" ");
                     }
                     line = br.readLine();
                 }
-                //System.out.println("line: "+line);
+                
                 // Saltar líneas en blanco hasta encontrar "Palabras Claves:"
                 while (line != null && line.trim().isEmpty()) {
                     line = br.readLine();
                 }
 
                 // Leer palabras clave
-//                System.out.println("---line---");
-//                System.out.println(line.trim().split(":")[0]);
-//                System.out.println(line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves"));
 
                 if (line != null && line.trim().split(":")[0].equalsIgnoreCase("Palabras Claves")) {
                     palabras.append(line.trim());
@@ -138,15 +129,13 @@ public class LeerTxt {
 
             if (!this.revisarRepetido(cuerpo.toString())){
              this.cuerpos.insertarUltimo(cuerpo.toString());
-//                System.out.println(autores.recorrer());
+
                 Resumen resumen = new Resumen(titulo, autores, cuerpo.toString().trim(), palabrasClave);
-                //System.out.println(resumen.mostrarResumen());
+                
                 this.setResumen(resumen);
                 this.cargarResumentxt(resumen);
                 guardado = true;
-                //this.getHashTitulos().insertarPorTitulo(resumen);
-                //this.getHashPalabrasClave().insertarPorPalabraClave(resumen);
-                //this.getHashAutores().insertarPorAutor(resumen);
+            
                 }
             
             else{
@@ -154,10 +143,10 @@ public class LeerTxt {
             }
             }
          catch (FileNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             guardado = false;
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             guardado = false;
         }
         
@@ -172,10 +161,8 @@ public class LeerTxt {
      */
     public boolean cargarResumentxt(Resumen resumen){
         boolean guardado = false;
-        //System.out.println("---resumen---");
        String resumenCargar;
        resumenCargar = resumen.mostrarResumen() + "\n%\n";
-        //System.out.println(resumenCargar);
         try{
             File archivo = new File("resumenes.txt");
             if (!archivo.exists()){
@@ -185,7 +172,6 @@ public class LeerTxt {
             pw.print(resumenCargar);
             pw.close();
             guardado = true;
-            //JOptionPane.showMessageDialog(null, "Guardado exitoso en" + archivo.getAbsolutePath());
             
         }
         catch (Exception err){
@@ -233,7 +219,7 @@ public class LeerTxt {
                 if (resumenSeparado[j].trim().equals("AUTORES")) {
                     String [] autoresSeparados = resumenSeparado[j+1].split(",");
                         for (int k = 0; k < autoresSeparados.length; k++) {
-                            //System.out.println(autoresSeparados[k].trim());
+
                             autores.preinsertarPrimero(autoresSeparados[k].trim());
                     }
                         }
@@ -245,23 +231,16 @@ public class LeerTxt {
                 if (resumenSeparado[j].trim().equals("PALABRAS CLAVES:")) {
                     String [] palabrasSeparada = resumenSeparado[j+1].split(",");
                         for (int k = 0; k< palabrasSeparada.length; k++) {
-//                    System.out.println("----");
-//                    System.out.println(palabrasSeparada[k].trim());
-//                    System.out.println("----");
+
                             palabrasClave.preinsertarPrimero(palabrasSeparada[k].trim());
                     }
                         }
                 
-                if (j == resumenSeparado.length -1){
-//                    System.out.println("titulo: "+ titulo);
-//                    System.out.println(titulo.equals( "GraphQL vs REST: una comparación desde la perspectiva de eficiencia de desempeño."));
+
+                if (j == resumenSeparado.length -1){                    
                     Resumen resumenObj = new Resumen(titulo, autores, cuerpo, palabrasClave);
-                    //System.out.println("resumen" + i+ ":"+ resumenObj.mostrarResumen());
-                    
-                    //this.listaDeResumenes.preinsertarPrimero(resumen);
                     this.listaDeResumenes.insertarAlfabetico(resumenObj);
                     this.getHashTitulos().insertarPorTitulo(resumenObj);
-                    //System.out.println(resumenObj.getPalabrasClave().recorrer());
                     this.getHashPalabrasClave().insertarPorPalabraClave(resumenObj);
                     this.getHashAutores().insertarPorAutor(resumenObj);
                     count++;
@@ -270,7 +249,7 @@ public class LeerTxt {
                
                 
                 }
-                //System.out.println(this.listaDeResumenes.recorrerResumenes());
+
 
             }
                 
@@ -280,12 +259,17 @@ public class LeerTxt {
             }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     } 
     return guardado;
 }
-   
+
+   /**
+    * Funcion que guarda los cuerpos de los resumenes precargados en una lista
+    * @param abre, documento de resumenes precargados
+    * @throws IOException 
+    */
    public void guardarCuerpos(File abre) throws IOException{
        boolean repetido= false;
        if (abre != null) {
@@ -301,7 +285,6 @@ public class LeerTxt {
             String[] resumenes = texto.toString().split("%");
             
             for (int i = 0; i < resumenes.length; i++) {
-                //System.out.println("resumen" + i + ":  "+ resumenes[i]);
             String cuerpo = "";
             
             //Separar cada resumen por salto de linea
@@ -330,51 +313,25 @@ public class LeerTxt {
         
         
        }
+   /**
+    * Funcion que revisa si un resumen ingresado ya se encuentra en los precargados
+    * @param cuerpo
+    * @return booleano, verdadero si esta repetido
+    */
    public boolean revisarRepetido(String cuerpo){
        boolean repetido = false;
-       //System.out.println(this.cuerpos.recorrer());
        if (this.cuerpos.buscar(this.cuerpos, cuerpo)){
            repetido = true;
        }
        return repetido;
    }
    
-//   public void analizarResumen() {
-//       String[] titulos = obtenerTitulos();
-//       ordenarTitulos(titulos);
-//       
-//       System.out.println("Resúmenes guardados:");
-//       for (int i=0; i< titulos.length; i++) {
-//           System.out.println((1+i) + ". " + titulos[i]);
-//       }
-//       
-//       int seleccion = obtenerSeleccion(titulos.length);
-//       if (seleccion == -1) {
-//           System.out.println("Operación cancelada");
-//           return;
-//       }
-//       String tituloSeleccionado = titulos[seleccion -1];
-//       Resumen resumenSeleccionado = obtenerResumen(tituloSeleccionado);
-//       if (resumenSeleccionado != null) {
-//           imprimirEstadisticas(resumenSeleccionado);
-//           
-//       } else {
-//           System.out.println("No se ha encontrado el resumen");
-//       }
-//   }
-//   
-//   private String[] obtenerTitulos() {
-//       Lista titulosLista = new Lista();
-//       for (int i = 0; i < hashTitulos.getSize(); i++) {
-//           NodoResumen nodo = hashTitulos.getNodo(i);
-//           while (nodo != null) {
-//               titulosLista.insertarUltimo(nodo.getInfo().getTitulo());
-//               nodo = nodo.getNext();
-//           }
-//       }
-//       return titulosLista.toArray();
-//   }
-   
+
+
+   /**
+    * Funcion que ordena los titulos de los resumenes
+    * @param titulos 
+    */
    private void ordenarTitulos(String[] titulos) {
        for (int i = 0; i< titulos.length -1; i++) {
            for (int j = 0; j< titulos.length -i-1; j++) {
@@ -386,7 +343,12 @@ public class LeerTxt {
            }
        }
    }
-   
+
+   /**
+    * 
+    * @param max
+    * @return 
+    */
    private int obtenerSeleccion(int max) {
        int seleccion = -1;
        do {
@@ -401,21 +363,12 @@ public class LeerTxt {
            }
        } while (seleccion < 1 || seleccion> max);
        return seleccion;
-   }
-   
-//   private Resumen obtenerResumen(String titulo) {
-//       for (int i = 0; i< hashTitulos.getSize(); i++) {
-//           NodoResumen nodo = hashTitulos.getNodo(i);
-//           while (nodo != null) {
-//               if (nodo.getInfo().getTitulo().equalsIgnoreCase(titulo)) {
-//                   return nodo.getInfo();
-//               }
-//               nodo = nodo.getNext();
-//           }
-//       }
-//       return null;
-//   }
-//   
+
+   }   
+   /**
+    * Funcion que imprime la frecuencia con la que aparecen las palabras claves en un resumen
+    * @param resumen 
+    */
    private void imprimirEstadisticas(Resumen resumen) {
        System.out.println("Nombre del Trabajo: " + resumen.getTitulo());
        System.out.println("Autores: " + resumen.getAutores().recorrer());
@@ -428,7 +381,13 @@ public class LeerTxt {
            System.out.println(palabras[i] + ": " + frecuencias[i]);
        }
    }
-   
+
+   /**
+    * Funcion que cuenta la frecuencia con la que aparecen las palabras clave en un resumen
+    * @param texto
+    * @param palabrasClave
+    * @return 
+    */
    private int [] contarFrecuencias(String texto, Lista palabrasClave) {
        String[] palabrasTexto = texto.split("\\W+");
        String[] palabras = palabrasClave.toArray();
@@ -469,42 +428,42 @@ public class LeerTxt {
         this.resumen = resumen;
     }
 
-    /**
+    /** Funcion para obtener el hash table de los titulos
      * @return the hashTitulos
      */
     public static Hashtable getHashTitulos() {
         return hashTitulos;
     }
 
-    /**
+    /** Funcion para asignar el hash table de los titulos
      * @param aHashTitulos the hashTitulos to set
      */
     public static void setHashTitulos(Hashtable aHashTitulos) {
         hashTitulos = aHashTitulos;
     }
 
-    /**
+    /** Funcion para obtener el hash table de las palabras clave
      * @return the hashPalabrasClave
      */
     public static Hashtable getHashPalabrasClave() {
         return hashPalabrasClave;
     }
 
-    /**
+    /** Funcion para asignar el hash table de las palabras claves
      * @param aHashPalabrasClave the hashPalabrasClave to set
      */
     public static void setHashPalabrasClave(Hashtable aHashPalabrasClave) {
         hashPalabrasClave = aHashPalabrasClave;
     }
 
-    /**
+    /** Funcion para obtener el hash table de los autores
      * @return the hashAutores
      */
     public static Hashtable getHashAutores() {
         return hashAutores;
     }
 
-    /**
+    /**Funcion para asignar el hash table de los autores
      * @param aHashAutores the hashAutores to set
      */
     public static void setHashAutores(Hashtable aHashAutores) {
