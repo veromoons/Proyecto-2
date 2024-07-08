@@ -71,7 +71,37 @@ public class ListaResumen {
         }
         iN++;   
     }
-    
+    /**
+     * 
+     * @param resumen 
+     */
+    public void insertarAlfabetico(Resumen resumen) {  
+    NodoResumen nuevo = new NodoResumen(resumen); 
+    if (first == null) {
+        first = nuevo; // Si la lista está vacía, el nuevo nodo es el primero
+    } else {
+        NodoResumen pAux = first;
+        NodoResumen pAuxParaOrden = null; // Mantiene el nodo anterior a pAux
+        
+        while (pAux != null && nuevo.getInfo().getTitulo().compareTo(pAux.getInfo().getTitulo()) > 0) {
+            pAuxParaOrden = pAux;
+            pAux = pAux.getNext();
+        }
+        
+        if (pAuxParaOrden == null) {
+            // Insertar al principio de la lista
+            nuevo.setNext(first);
+            first = nuevo;
+        } else {
+            // Insertar en el medio o al final de la lista
+            pAuxParaOrden.setNext(nuevo);
+            nuevo.setNext(pAux);
+        }
+    }
+    iN++; // Incrementar el contador de nodos
+}
+
+
         /**
      * Metodo para guardar los elementos de la lista en un string
      * @return 
@@ -83,11 +113,8 @@ public class ListaResumen {
         }
         else{
             NodoResumen temp = getFirst();
-            //int contador=0;
             while (temp != null){
                 imprimir += temp.getInfo().getInfoResumen() + "\n";
-                //contador++;
-                //System.out.println(contador);
                 temp = temp.getNext();
             }
         }

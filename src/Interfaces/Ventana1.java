@@ -41,45 +41,48 @@ public class Ventana1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cargarResumen = new javax.swing.JButton();
         usarResumenesCargados = new javax.swing.JButton();
-        continuar = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cargarResumen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 1 v1.png"))); // NOI18N
-        cargarResumen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cargarResumen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton cargar v1.png"))); // NOI18N
+        cargarResumen.setBorder(null);
         cargarResumen.setBorderPainted(false);
         cargarResumen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cargarResumenActionPerformed(evt);
             }
         });
-        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 160, 50));
+        jPanel1.add(cargarResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 170, 50));
 
-        usarResumenesCargados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton 2 v1.png"))); // NOI18N
+        usarResumenesCargados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton continuar v1 (2).png"))); // NOI18N
+        usarResumenesCargados.setBorder(null);
         usarResumenesCargados.setBorderPainted(false);
         usarResumenesCargados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usarResumenesCargadosActionPerformed(evt);
             }
         });
-        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 250, 50));
+        jPanel1.add(usarResumenesCargados, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 170, 50));
 
-        continuar.setText("Continuar");
-        continuar.addActionListener(new java.awt.event.ActionListener() {
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton salir.png"))); // NOI18N
+        exit.setBorder(null);
+        exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continuarActionPerformed(evt);
+                exitActionPerformed(evt);
             }
         });
-        jPanel1.add(continuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 350, -1, -1));
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, 30, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v1.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 420));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 400));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 420));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -94,44 +97,43 @@ public class Ventana1 extends javax.swing.JFrame {
             txt.guardarCuerpos(archivo);
             if (txt.cargarInfo(abre)){
                 this.cargado =true;
-                JOptionPane.showMessageDialog(this, "Informacion guardada exitosamente!");
+                JOptionPane.showMessageDialog(this, "Informacion guardada exitosamente.");
             }
             else{
                 JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo. Recuerde que el resumen debe tener titulo, autores, cuerpo y palabras clave. No debe estar repetido ");
             }
             
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se pudo guardar la informacion. Intente de nuevo. Recuerde que el resumen debe tener titulo, autores, cuerpo y palabras clave. No debe estar repetido ");
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error cargando su archivo. Por favor, intente de nuevo.");
         }
+
     }//GEN-LAST:event_cargarResumenActionPerformed
 
     private void usarResumenesCargadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usarResumenesCargadosActionPerformed
         // TODO add your handling code here:
         LeerTxt txt = Main.txt;
+        
         try {
             File archivo = new File("resumenes.txt");
             //txt.leerResumenes(archivo);
             if (!txt.leerResumenesTxt(archivo)) {
-                JOptionPane.showMessageDialog(this, "No hay resumenes precargados");
+                JOptionPane.showMessageDialog(this, "Debe seleccionar algun tipo de informacion para continuar, sea utilizar resumenes precargados o cargar un nuevo resumen.");
             }
             else{
-                JOptionPane.showMessageDialog(this, "Si hay resumenes precargados");
+                //JOptionPane.showMessageDialog(this, "Si hay resumenes precargados");
                 this.cargado = true;
+                Ventana2 v2 = new Ventana2();
+                v2.setVisible(true);
+                this.setVisible(false);
             }
              } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error revisando resumenes precargados");
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error precargando los resumenes. Por favor, intente de nuevo.");
         }
     }//GEN-LAST:event_usarResumenesCargadosActionPerformed
 
-    private void continuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuarActionPerformed
-        if (this.cargado){
-        Ventana2 v2 = new Ventana2();
-        v2.setVisible(true);
-        this.setVisible(false);}
-        else{
-            JOptionPane.showMessageDialog(this, "Debe seleccionar algun tipo de informacion para trabajar. Resumenes precargados o cargar nuevo resumen");
-        }
-    }//GEN-LAST:event_continuarActionPerformed
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,7 +172,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarResumen;
-    private javax.swing.JButton continuar;
+    private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton usarResumenesCargados;

@@ -3,11 +3,8 @@ package Clases;
 
 /**
  * Clase para implementar primitivas de una lista simplemente enlazada
-<<<<<<< HEAD
+
  * @author veronicaluna, ruthsenior
-=======
- * @author veronicaluna
->>>>>>> 1054f4d0b1c5371602479bc670408fda0429a87f
  */
 
 public class Lista {
@@ -59,6 +56,20 @@ public class Lista {
         }
         return aux;
     }
+    /**
+     * Metodo para un nodo segun su posicion en una lista
+     * @param i
+     * @return 
+     */
+    public Nodo getPosicion(int i){
+        int contador =0;
+        Nodo pAux = first;
+        while (contador !=i){
+            pAux=pAux.getNext();
+            contador++;
+        }
+        return pAux;
+    }
     
     /**
      * Metodo para insertar al final de la lista
@@ -94,7 +105,12 @@ public class Lista {
         }
         return imprimir;
     }
-    
+    /**
+     * Metodo para buscar elementos en la lista
+     * @param lista
+     * @param aBuscar
+     * @return 
+     */
     public boolean buscar(Lista lista, String aBuscar){
         boolean encontrado = false;
         if (!lista.esVacia()){
@@ -139,7 +155,10 @@ public class Lista {
     public void setiN(int iN) {
         this.iN = iN;
     }
-
+    /**
+     * Metodo para construir un array a partir de una lista
+     * @return  array
+     */
     public String[] toArray() {
         String [] array = new String[iN];
         Nodo temp = first;
@@ -150,7 +169,7 @@ public class Lista {
             i++;
         }
         return array;
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
  
 }

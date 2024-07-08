@@ -2,7 +2,7 @@
 package Clases;
 
 /**
- *Clase para 
+ *Clase nodo que guarda informacion de tipo string
  *.
  * @author sofiagrateron
  */
