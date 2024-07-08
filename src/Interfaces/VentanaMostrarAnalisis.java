@@ -101,7 +101,7 @@ public class VentanaMostrarAnalisis extends javax.swing.JFrame {
     }
 
     private static String normalize(String input) {
-        // Eliminar acentos y convertir a minúsculas
+        //eliminar acentos y convertir a minúsculas
         String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
         normalized = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
         return normalized.toLowerCase();
@@ -122,7 +122,7 @@ public class VentanaMostrarAnalisis extends javax.swing.JFrame {
         Lista keywords = this.resumen.getPalabrasClave();
 
         ListaInt result = contarPalabrasClave(text, keywords);
-        String analisis= this.resumen.getTitulo() +"\n\n"+this.resumen.getAutores().recorrer()+"\n\n";
+        String analisis= this.resumen.getTitulo() +"\n\n"+this.resumen.getAutores().recorrer()+"\n\n"+"Palabras clave y su frecuencia: \n";
 
         for (int i = 0; i < keywords.getiN(); i++) {
             analisis+=keywords.getPosicion(keywords.getiN()-1-i).getInfo() + ": " + result.getPosicion(i).getInfo()+"\n";
